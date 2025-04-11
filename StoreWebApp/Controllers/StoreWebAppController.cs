@@ -48,5 +48,8 @@ namespace StoreWebApp.Controllers
 
             return new JsonResult(table);
         }
+
+
+
     }
 }
