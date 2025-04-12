@@ -24,7 +24,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="header">
-          <h1>My Online Shop</h1>
+          <h1>Sklep Wszystko i Nic</h1>
         </header>
         <div className="container">
           <div className="products-list">
