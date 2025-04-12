@@ -1,12 +1,228 @@
 {
   "Version": 1,
-  "Hash": "UcD11eGsmZLLZVsygSpnUo/YFOIFl0XErF3LfIA2wGY=",
+  "Hash": "4doflpRvyhEjWkjg24+ZrhZNlYMVEHwr55uYCxs8apY=",
   "Source": "StoreWebApp",
   "BasePath": "_content/StoreWebApp",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "StoreWebApp\\wwwroot",
+      "Source": "StoreWebApp",
+      "ContentRoot": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\",
+      "BasePath": "_content/StoreWebApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\pomidor.jpg",
+      "SourceId": "StoreWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\",
+      "BasePath": "_content/StoreWebApp",
+      "RelativePath": "images/pomidor#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "jcce70nev1",
+      "Integrity": "/XKNYlI3/+a5KQr9lbiezEb2JerSGLwZipXyyCznj9w=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\pomidor.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\swiderki.png",
+      "SourceId": "StoreWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\",
+      "BasePath": "_content/StoreWebApp",
+      "RelativePath": "images/swiderki#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "km3cdd051o",
+      "Integrity": "XF4oPloeivJRUU8iJtjHQt8MYgAbxQ1ERqCsvv3ePaw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\swiderki.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "images/pomidor.jcce70nev1.jpg",
+      "AssetFile": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\pomidor.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "108720"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/XKNYlI3/+a5KQr9lbiezEb2JerSGLwZipXyyCznj9w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 10:56:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jcce70nev1"
+        },
+        {
+          "Name": "label",
+          "Value": "images/pomidor.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/XKNYlI3/+a5KQr9lbiezEb2JerSGLwZipXyyCznj9w="
+        }
+      ]
+    },
+    {
+      "Route": "images/pomidor.jpg",
+      "AssetFile": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\pomidor.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "108720"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/XKNYlI3/+a5KQr9lbiezEb2JerSGLwZipXyyCznj9w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 10:56:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/XKNYlI3/+a5KQr9lbiezEb2JerSGLwZipXyyCznj9w="
+        }
+      ]
+    },
+    {
+      "Route": "images/swiderki.km3cdd051o.png",
+      "AssetFile": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\swiderki.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "182679"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XF4oPloeivJRUU8iJtjHQt8MYgAbxQ1ERqCsvv3ePaw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 10:56:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "km3cdd051o"
+        },
+        {
+          "Name": "label",
+          "Value": "images/swiderki.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-XF4oPloeivJRUU8iJtjHQt8MYgAbxQ1ERqCsvv3ePaw="
+        }
+      ]
+    },
+    {
+      "Route": "images/swiderki.png",
+      "AssetFile": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\swiderki.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "182679"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XF4oPloeivJRUU8iJtjHQt8MYgAbxQ1ERqCsvv3ePaw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 10:56:51 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-XF4oPloeivJRUU8iJtjHQt8MYgAbxQ1ERqCsvv3ePaw="
+        }
+      ]
+    }
+  ]
 }

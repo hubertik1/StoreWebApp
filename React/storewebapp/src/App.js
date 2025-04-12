@@ -1,8 +1,8 @@
+import React, { Component } from 'react';
 import './App.css';
-import { Component } from 'react';
 
 class App extends Component {
-  constructor(props) {
+  constructor(props){
     super(props);
     this.state = {
       products: []
@@ -11,33 +11,47 @@ class App extends Component {
 
   API_URL = 'http://localhost:5042/';
 
-  componentDidMount() {
-    this.refreshProducts();
-  }
-
-  async refreshProducts() {
+  componentDidMount(){
     fetch(this.API_URL + 'api/storewebapp/GetProducts')
       .then((response) => response.json())
       .then((data) => {
         this.setState({ products: data });
       });
-  } 
+  }
 
-  render() {
+  render(){
     const { products } = this.state;
     return (
       <div className="App">
+        <header className="header">
+          <h1>My Online Shop</h1>
+        </header>
         <div className="container">
-          <h2>My Shop</h2>
-          <div className="products-grid">
-            {products.map(product =>
+          <div className="products-list">
+            {products.map(product => (
               <div className="product-card" key={product.id || product.title}>
-                <h3>{product.title}</h3>
-                <p>{product.description}</p>
+                {product.image_url && (
+                  <div className="product-image">
+                    <img 
+                      src={product.image_url} 
+                      alt={product.title} 
+                    />
+                  </div>
+                )}
+                <div className="product-details">
+                  <div className="details-text">
+                    <h3>{product.title}</h3>
+                    <p>{product.description}</p>
+                  </div>
+                  <button className="buy-button">Kup teraz</button>
+                </div>
               </div>
-            )}
+            ))}
           </div>
         </div>
+        <footer className="footer">
+          <p>&copy; 2025 My Online Shop. All rights reserved.</p>
+        </footer>
       </div>
     );
   }

@@ -83,10 +83,10 @@ C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\staticweb
 C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.StoreWebApp.props
 C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.StoreWebApp.props
 C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\StoreWeb.86C61C0B.Up2Date
 C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\StoreWebApp.dll
 C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\refint\StoreWebApp.dll
 C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\StoreWebApp.pdb
 C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\StoreWebApp.genruntimeconfig.cache
 C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\obj\Debug\net8.0\ref\StoreWebApp.dll
+C:\Users\huber\Desktop\studia\StoreWebApp\StoreWebApp\bin\Debug\net8.0\StoreWebApp.staticwebassets.runtime.json
