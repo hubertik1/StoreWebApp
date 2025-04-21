@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4doflpRvyhEjWkjg24+ZrhZNlYMVEHwr55uYCxs8apY=",
+  "Hash": "WkSmWNDpD6VA2vZG75fP/pKdjyj7j6Ji9gDCgvkUUOY=",
   "Source": "StoreWebApp",
   "BasePath": "_content/StoreWebApp",
   "Mode": "Default",
@@ -8,19 +8,40 @@
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [
     {
-      "Name": "StoreWebApp\\wwwroot",
+      "Name": "StoreWebApp/wwwroot",
       "Source": "StoreWebApp",
-      "ContentRoot": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\",
+      "ContentRoot": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/",
       "BasePath": "_content/StoreWebApp",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\pomidor.jpg",
+      "Identity": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/piaskownica.webp",
       "SourceId": "StoreWebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\",
+      "ContentRoot": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/",
+      "BasePath": "_content/StoreWebApp",
+      "RelativePath": "images/piaskownica#[.{fingerprint}]?.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qjlsr4y2kp",
+      "Integrity": "6ng4qTQhcLHVbLrDRqCd12fAE5NharLvgx3p4D2hbY8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/piaskownica.webp"
+    },
+    {
+      "Identity": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/pomidor.jpg",
+      "SourceId": "StoreWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/",
       "BasePath": "_content/StoreWebApp",
       "RelativePath": "images/pomidor#[.{fingerprint}]?.jpg",
       "AssetKind": "All",
@@ -35,13 +56,55 @@
       "Integrity": "/XKNYlI3/+a5KQr9lbiezEb2JerSGLwZipXyyCznj9w=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\pomidor.jpg"
+      "OriginalItemSpec": "wwwroot/images/pomidor.jpg"
     },
     {
-      "Identity": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\swiderki.png",
+      "Identity": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/seicento.webp",
       "SourceId": "StoreWebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\",
+      "ContentRoot": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/",
+      "BasePath": "_content/StoreWebApp",
+      "RelativePath": "images/seicento#[.{fingerprint}]?.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "vvtvrgt367",
+      "Integrity": "9YtpdmcCm+aCslHfS+HsSNLTYlXBgnLptO/Pf57TWMY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/seicento.webp"
+    },
+    {
+      "Identity": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/spawarka.jpg",
+      "SourceId": "StoreWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/",
+      "BasePath": "_content/StoreWebApp",
+      "RelativePath": "images/spawarka#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "kjdh76zpgm",
+      "Integrity": "0A0rQGVKyY5WKnj83L5bxbDOObYGYooWq+HdEDUjgNg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/images/spawarka.jpg"
+    },
+    {
+      "Identity": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/swiderki.png",
+      "SourceId": "StoreWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/",
       "BasePath": "_content/StoreWebApp",
       "RelativePath": "images/swiderki#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -56,13 +119,95 @@
       "Integrity": "XF4oPloeivJRUU8iJtjHQt8MYgAbxQ1ERqCsvv3ePaw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\swiderki.png"
+      "OriginalItemSpec": "wwwroot/images/swiderki.png"
     }
   ],
   "Endpoints": [
     {
+      "Route": "images/piaskownica.qjlsr4y2kp.webp",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/piaskownica.webp",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8566"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/webp"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6ng4qTQhcLHVbLrDRqCd12fAE5NharLvgx3p4D2hbY8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qjlsr4y2kp"
+        },
+        {
+          "Name": "label",
+          "Value": "images/piaskownica.webp"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6ng4qTQhcLHVbLrDRqCd12fAE5NharLvgx3p4D2hbY8="
+        }
+      ]
+    },
+    {
+      "Route": "images/piaskownica.webp",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/piaskownica.webp",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8566"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/webp"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6ng4qTQhcLHVbLrDRqCd12fAE5NharLvgx3p4D2hbY8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6ng4qTQhcLHVbLrDRqCd12fAE5NharLvgx3p4D2hbY8="
+        }
+      ]
+    },
+    {
       "Route": "images/pomidor.jcce70nev1.jpg",
-      "AssetFile": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\pomidor.jpg",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/pomidor.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -83,7 +228,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 12 Apr 2025 10:56:41 GMT"
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -107,7 +252,7 @@
     },
     {
       "Route": "images/pomidor.jpg",
-      "AssetFile": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\pomidor.jpg",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/pomidor.jpg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -128,7 +273,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 12 Apr 2025 10:56:41 GMT"
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -143,8 +288,172 @@
       ]
     },
     {
+      "Route": "images/seicento.vvtvrgt367.webp",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/seicento.webp",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "132110"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/webp"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"9YtpdmcCm+aCslHfS+HsSNLTYlXBgnLptO/Pf57TWMY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "vvtvrgt367"
+        },
+        {
+          "Name": "label",
+          "Value": "images/seicento.webp"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-9YtpdmcCm+aCslHfS+HsSNLTYlXBgnLptO/Pf57TWMY="
+        }
+      ]
+    },
+    {
+      "Route": "images/seicento.webp",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/seicento.webp",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "132110"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/webp"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"9YtpdmcCm+aCslHfS+HsSNLTYlXBgnLptO/Pf57TWMY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-9YtpdmcCm+aCslHfS+HsSNLTYlXBgnLptO/Pf57TWMY="
+        }
+      ]
+    },
+    {
+      "Route": "images/spawarka.jpg",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/spawarka.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "446942"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0A0rQGVKyY5WKnj83L5bxbDOObYGYooWq+HdEDUjgNg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-0A0rQGVKyY5WKnj83L5bxbDOObYGYooWq+HdEDUjgNg="
+        }
+      ]
+    },
+    {
+      "Route": "images/spawarka.kjdh76zpgm.jpg",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/spawarka.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "446942"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0A0rQGVKyY5WKnj83L5bxbDOObYGYooWq+HdEDUjgNg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "kjdh76zpgm"
+        },
+        {
+          "Name": "label",
+          "Value": "images/spawarka.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-0A0rQGVKyY5WKnj83L5bxbDOObYGYooWq+HdEDUjgNg="
+        }
+      ]
+    },
+    {
       "Route": "images/swiderki.km3cdd051o.png",
-      "AssetFile": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\swiderki.png",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/swiderki.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -165,7 +474,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 12 Apr 2025 10:56:51 GMT"
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -189,7 +498,7 @@
     },
     {
       "Route": "images/swiderki.png",
-      "AssetFile": "C:\\Users\\huber\\Desktop\\studia\\StoreWebApp\\StoreWebApp\\wwwroot\\images\\swiderki.png",
+      "AssetFile": "/Users/hubert/studia/StoreWebApp/StoreWebApp/wwwroot/images/swiderki.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -210,7 +519,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 12 Apr 2025 10:56:51 GMT"
+          "Value": "Sat, 12 Apr 2025 12:41:27 GMT"
         },
         {
           "Name": "Cache-Control",

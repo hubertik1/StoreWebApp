@@ -1,7 +1,9 @@
-﻿using System.Data;
-using Microsoft.Data.SqlClient;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using StoreWebApp.Data;
+using StoreWebApp.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StoreWebApp.Controllers
 {
@@ -9,47 +11,18 @@ namespace StoreWebApp.Controllers
     [ApiController]
     public class StoreWebAppController : ControllerBase
     {
-        private IConfiguration _configuration;
-        public StoreWebAppController(IConfiguration configuration)
+        private readonly StoreWebAppContext _context;
+        public StoreWebAppController(StoreWebAppContext context)
         {
-            _configuration = configuration;
+            _context = context;
         }
 
         [HttpGet]
         [Route("GetProducts")]
-        public JsonResult GetProducts()
+        public ActionResult<List<Product>> GetProducts()
         {
-            string query = "SELECT * FROM dbo.Product";
-            DataTable table = new DataTable();
-
-            string sqlDataSource = _configuration.GetConnectionString("StoreWebAppDBCon");
-
-            string dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
-            if (!string.IsNullOrEmpty(dbPassword))
-            {
-                sqlDataSource = sqlDataSource.Replace("%DB_PASSWORD%", dbPassword);
-            }
-            else
-            {
-                throw new Exception("Zmienna środowiskowa DB_PASSWORD nie została ustawiona.");
-            }
-
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                }
-            }
-
-            return new JsonResult(table);
+            List<Product> products = _context.Products.AsNoTracking().ToList();
+            return Ok(products);
         }
-
-
-
     }
 }
