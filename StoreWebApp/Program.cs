@@ -7,13 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("StoreWebAppDBCon");
 if (connectionString == null)
 {
-    throw new Exception("Nie można znaleźć connection stringa o nazwie StoreWebAppDBCon.");
+    throw new Exception("There is no connection string named StoreWebAppDBCon.");
 }
 
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 if (string.IsNullOrEmpty(dbPassword))
 {
-    throw new Exception("Zmienna środowiskowa DB_PASSWORD nie została ustawiona.");
+    throw new Exception("There is no environmental var named DB_PASSWORD");
 }
 
 connectionString = connectionString.Replace("%DB_PASSWORD%", dbPassword);
