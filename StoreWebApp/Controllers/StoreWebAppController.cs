@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using StoreWebApp.Data;
 using StoreWebApp.Models;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace StoreWebApp.Controllers
 {
