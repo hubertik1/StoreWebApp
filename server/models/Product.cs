@@ -5,9 +5,16 @@ namespace StoreWebApp.Models
     [Table("product", Schema = "dbo")]
     public class Product
     {
-        public long id { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public string image_url { get; set; }
+        [Column("id")]
+        public long Id { get; set; }
+
+        [Column("title")]
+        public string? Title { get; set; }
+
+        [Column("description")]
+        public string? Description { get; set; }
+
+        [Column("image_url")]
+        public string? ImageUrl { get; set; }
     }
 }
