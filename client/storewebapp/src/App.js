@@ -30,10 +30,10 @@ class App extends Component {
           <div className="products-list">
             {products.map(product => (
               <div className="product-card" key={product.id || product.title}>
-                {product.image_url && (
+                {product.imageUrl && (
                   <div className="product-image">
                     <img 
-                      src={product.image_url} 
+                      src={product.imageUrl} 
                       alt={product.title} 
                     />
                   </div>
