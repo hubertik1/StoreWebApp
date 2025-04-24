@@ -50,7 +50,7 @@ class App extends Component {
           </div>
         </div>
         <footer className="footer">
-          <p>&copy; 2025 My Online Shop. All rights reserved.</p>
+          <p>&copy; 2025 Sklep Wszystko i Nic. All rights reserved.</p>
         </footer>
       </div>
     );
