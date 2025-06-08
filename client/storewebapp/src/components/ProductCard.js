@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductCard = ({ product, apiUrl }) => {
+const ProductCard = ({ product, apiUrl, onDelete }) => {
   return (
     <div className="product-card" data-testid="product-card">
       {product.imageUrl && (
@@ -13,7 +13,10 @@ const ProductCard = ({ product, apiUrl }) => {
           <h3>{product.title}</h3>
           <p>{product.description}</p>
         </div>
-        <button className="buy-button">Do koszyka</button>
+        <div>
+          <button className="buy-button">Do koszyka</button>
+          <button className="delete-button" onClick={() => onDelete(product.id)}>Usuń</button>
+        </div>
       </div>
     </div>
   );
