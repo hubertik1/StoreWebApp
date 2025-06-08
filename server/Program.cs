@@ -4,23 +4,12 @@ using StoreWebApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("StoreWebAppDBCon");
-if (connectionString == null)
-{
-    throw new Exception("There is no connection string named StoreWebAppDBCon.");
-}
-
-var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
-if (string.IsNullOrEmpty(dbPassword))
-{
-    throw new Exception("There is no environmental var named DB_PASSWORD");
-}
-
-connectionString = connectionString.Replace("%DB_PASSWORD%", dbPassword);
+var connectionString = builder.Configuration.GetConnectionString("StoreWebAppDBCon")
+    ?? throw new Exception("There is no connection string named StoreWebAppDBCon.");
 
 builder.Services.AddDbContext<StoreWebAppContext>(options =>
-    options.UseSqlServer(connectionString)
-);
+    options.UseSqlite(connectionString));
+
 
 builder.Services.AddControllers();
 

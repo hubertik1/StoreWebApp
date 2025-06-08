@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StoreWebApp.Models
 {
-    [Table("product", Schema = "dbo")]
+    [Table("product")]
     public class Product
     {
         [Column("id")]
