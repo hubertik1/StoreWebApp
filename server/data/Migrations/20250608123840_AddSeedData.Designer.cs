@@ -7,11 +7,11 @@ using StoreWebApp.Data;
 
 #nullable disable
 
-namespace StoreWebApp.Migrations
+namespace StoreWebApp.Data.Migrations
 {
     [DbContext(typeof(StoreWebAppContext))]
-    [Migration("20250608120731_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250608123840_AddSeedData")]
+    partial class AddSeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

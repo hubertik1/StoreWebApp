@@ -18,6 +18,14 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+using(var scope = app.Services.CreateScope())
+{
+    var ctx = scope.ServiceProvider.GetRequiredService<StoreWebAppContext>();
+    ctx.Database.Migrate();
+    SeedData.Initialize(ctx);
+}
+
+
 app.UseCors(c => c.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
 if (app.Environment.IsDevelopment())
