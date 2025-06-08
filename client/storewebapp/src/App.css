@@ -91,6 +91,22 @@
   background-color: darkorange;
 }
 
+.delete-button {
+  background-color: #e74c3c;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
 .footer {
   background-color: #333;
   color: #ccc;
