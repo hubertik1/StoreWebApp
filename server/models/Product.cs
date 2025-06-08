@@ -16,5 +16,8 @@ namespace StoreWebApp.Models
 
         [Column("image_url")]
         public string? ImageUrl { get; set; }
+
+        [Column("is_deleted")]
+        public bool IsDeleted { get; set; }
     }
 }
