@@ -22,10 +22,59 @@ namespace StoreWebApp.Controllers
         public ActionResult<List<Product>> GetProducts()
         {
             List<Product> products = _context.Products
+                .Where(p => !p.IsDeleted)
                 .Include(p => p.Categories)
                 .Include(p => p.Comments)
                 .AsNoTracking().ToList();
             return Ok(products);
         }
+
+        [HttpPost]
+        [Route("AddProduct")]
+        public ActionResult<Product> AddProduct([FromBody] Product product)
+        {
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
+        }
+
+        [HttpPut]
+        [Route("UpdateProduct/{id}")]
+        public IActionResult UpdateProduct(long id, [FromBody] Product updatedProduct)
+        {
+            if (id != updatedProduct.Id)
+                return BadRequest();
+
+            var product = _context.Products
+                .Include(p => p.Categories)
+                .Include(p => p.Comments)
+                .FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+                return NotFound();
+
+            product.Title = updatedProduct.Title;
+            product.Description = updatedProduct.Description;
+            product.ImageUrl = updatedProduct.ImageUrl;
+            product.IsDeleted = updatedProduct.IsDeleted;
+
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("DeleteProduct/{id}")]
+        public IActionResult DeleteProduct(long id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+                return NotFound();
+
+            product.IsDeleted = true;
+            _context.SaveChanges();
+            return NoContent();
+        }
     }
+
+
 }
