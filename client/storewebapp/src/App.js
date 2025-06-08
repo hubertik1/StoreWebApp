@@ -32,9 +32,9 @@ class App extends Component {
               <div className="product-card" key={product.id || product.title}>
                 {product.imageUrl && (
                   <div className="product-image">
-                    <img 
-                      src={product.imageUrl} 
-                      alt={product.title} 
+                    <img
+                      src={`${this.API_URL}${product.imageUrl}`}
+                      alt={product.title}
                     />
                   </div>
                 )}
@@ -43,7 +43,7 @@ class App extends Component {
                     <h3>{product.title}</h3>
                     <p>{product.description}</p>
                   </div>
-                  <button className="buy-button">Kup teraz</button>
+                  <button className="buy-button">Do koszyka</button>
                 </div>
               </div>
             ))}
