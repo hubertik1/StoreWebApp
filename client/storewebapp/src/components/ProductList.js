@@ -3,15 +3,16 @@ import ProductCard from './ProductCard';
 
 const API_URL = 'http://localhost:5042/';
 
-const ProductList = () => {
+const ProductList = ({ search }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    loadProducts();
-  }, []);
+    loadProducts(search);
+  }, [search]);
 
-  const loadProducts = () => {
-    fetch(`${API_URL}api/storewebapp/GetProducts`)
+  const loadProducts = term => {
+    const query = term ? `?search=${encodeURIComponent(term)}` : '';
+    fetch(`${API_URL}api/storewebapp/GetProducts${query}`)
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(() => {});

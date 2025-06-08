@@ -6,3 +6,10 @@ test('renders store header', () => {
   const headerElement = screen.getByRole('heading', { name: /Sklep Wszystko i Nic/i });
   expect(headerElement).toBeInTheDocument();
 });
+
+test('renders search input', () => {
+  render(<App />);
+  const input = screen.getByPlaceholderText(/Szukaj produktu/i);
+  expect(input).toBeInTheDocument();
+});
+

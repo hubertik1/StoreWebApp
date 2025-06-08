@@ -19,10 +19,19 @@ namespace StoreWebApp.Controllers
 
         [HttpGet]
         [Route("GetProducts")]
-        public ActionResult<List<Product>> GetProducts()
+        public ActionResult<List<Product>> GetProducts([FromQuery] string? search)
         {
-            List<Product> products = _context.Products
-                .Where(p => !p.IsDeleted)
+            var query = _context.Products
+                .Where(p => !p.IsDeleted);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                search = search.ToLower();
+                query = query.Where(p =>
+                    EF.Functions.Like(p.Title.ToLower(), $"%{search}%"));
+            }
+
+            List<Product> products = query
                 .Include(p => p.Categories)
                 .Include(p => p.Comments)
                 .AsNoTracking().ToList();
