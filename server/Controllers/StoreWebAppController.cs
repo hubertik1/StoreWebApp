@@ -23,7 +23,7 @@ namespace StoreWebApp.Controllers
         public ActionResult<PagedResult<Product>> GetProducts(
             [FromQuery] string? search,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 5)
+            [FromQuery] int pageSize = 4)
         {
             var query = _context.Products
                 .Where(p => !p.IsDeleted);

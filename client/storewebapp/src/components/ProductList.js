@@ -51,9 +51,9 @@ const ProductList = ({ search }) => {
         ))}
       </div>
       <div className="pagination">
-        <button onClick={handlePrev} disabled={page === 1}>Prev</button>
+        <button onClick={handlePrev} disabled={page === 1}>&lt;</button>
         <span>{page} / {totalPages}</span>
-        <button onClick={handleNext} disabled={page === totalPages}>Next</button>
+        <button onClick={handleNext} disabled={page === totalPages}>&gt;</button>
       </div>
     </div>
   );
