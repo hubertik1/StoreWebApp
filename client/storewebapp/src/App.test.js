@@ -13,3 +13,9 @@ test('renders search input', () => {
   expect(input).toBeInTheDocument();
 });
 
+test('renders pagination controls', () => {
+  render(<App />);
+  const nextButton = screen.getByRole('button', { name: /Next/i });
+  expect(nextButton).toBeInTheDocument();
+});
+

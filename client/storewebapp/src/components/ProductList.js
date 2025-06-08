@@ -5,16 +5,27 @@ const API_URL = 'http://localhost:5042/';
 
 const ProductList = ({ search }) => {
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    loadProducts(search);
+    setPage(1);
   }, [search]);
 
-  const loadProducts = term => {
-    const query = term ? `?search=${encodeURIComponent(term)}` : '';
-    fetch(`${API_URL}api/storewebapp/GetProducts${query}`)
+  useEffect(() => {
+    loadProducts(search, page);
+  }, [search, page]);
+
+  const loadProducts = (term, pageNum) => {
+    const params = new URLSearchParams();
+    if (term) params.append('search', term);
+    params.append('page', pageNum);
+    fetch(`${API_URL}api/storewebapp/GetProducts?${params.toString()}`)
       .then(res => res.json())
-      .then(data => setProducts(data))
+      .then(data => {
+        setProducts(data.items);
+        setTotalPages(data.totalPages);
+      })
       .catch(() => {});
   };
 
@@ -23,6 +34,9 @@ const ProductList = ({ search }) => {
       .then(() => setProducts(prev => prev.filter(p => p.id !== id)))
       .catch(() => {});
   };
+
+  const handlePrev = () => setPage(p => Math.max(1, p - 1));
+  const handleNext = () => setPage(p => Math.min(totalPages, p + 1));
 
   return (
     <div className="container">
@@ -35,6 +49,11 @@ const ProductList = ({ search }) => {
             onDelete={handleDelete}
           />
         ))}
+      </div>
+      <div className="pagination">
+        <button onClick={handlePrev} disabled={page === 1}>Prev</button>
+        <span>{page} / {totalPages}</span>
+        <button onClick={handleNext} disabled={page === totalPages}>Next</button>
       </div>
     </div>
   );

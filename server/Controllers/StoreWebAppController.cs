@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StoreWebApp.Data;
 using StoreWebApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,10 @@ namespace StoreWebApp.Controllers
 
         [HttpGet]
         [Route("GetProducts")]
-        public ActionResult<List<Product>> GetProducts([FromQuery] string? search)
+        public ActionResult<PagedResult<Product>> GetProducts(
+            [FromQuery] string? search,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 5)
         {
             var query = _context.Products
                 .Where(p => !p.IsDeleted);
@@ -31,11 +35,23 @@ namespace StoreWebApp.Controllers
                     EF.Functions.Like(p.Title.ToLower(), $"%{search}%"));
             }
 
+            int totalItems = query.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
             List<Product> products = query
                 .Include(p => p.Categories)
                 .Include(p => p.Comments)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .AsNoTracking().ToList();
-            return Ok(products);
+
+            var result = new PagedResult<Product>
+            {
+                Items = products,
+                TotalPages = totalPages
+            };
+
+            return Ok(result);
         }
 
         [HttpPost]
