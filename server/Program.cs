@@ -1,32 +1,40 @@
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 using StoreWebApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("StoreWebAppDBCon")
-    ?? throw new Exception("There is no connection string named StoreWebAppDBCon.");
+var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? $"Data Source={Path.Combine(builder.Environment.ContentRootPath, "StoreWebApp.db")}";
 
-builder.Services.AddDbContext<StoreWebAppContext>(options =>
-    options.UseSqlite(connectionString));
+builder.Services.AddDbContext<StoreDbContext>(opt =>
+    opt.UseSqlite(connectionString));
 
-
-builder.Services.AddControllers();
+builder.Services
+       .AddControllers()
+       .AddNewtonsoftJson(o =>
+           o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(p =>
+        p.AllowAnyOrigin()
+         .AllowAnyHeader()
+         .AllowAnyMethod());
+});
+
 var app = builder.Build();
 
-using(var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
-    var ctx = scope.ServiceProvider.GetRequiredService<StoreWebAppContext>();
+    var ctx = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
     ctx.Database.Migrate();
     SeedData.Initialize(ctx);
 }
-
-
-app.UseCors(c => c.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
 if (app.Environment.IsDevelopment())
 {
@@ -35,6 +43,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
+app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

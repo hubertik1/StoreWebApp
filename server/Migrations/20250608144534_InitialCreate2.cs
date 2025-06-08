@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace StoreWebApp.Data.Migrations
+namespace StoreWebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class AddSeedData : Migration
+    public partial class InitialCreate2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

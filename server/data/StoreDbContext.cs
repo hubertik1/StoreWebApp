@@ -3,11 +3,11 @@ using StoreWebApp.Models;
 
 namespace StoreWebApp.Data
 {
-    public class StoreWebAppContext : DbContext
+    public class StoreDbContext : DbContext
     {
-        public StoreWebAppContext(DbContextOptions<StoreWebAppContext> options)
+        public StoreDbContext(DbContextOptions<StoreDbContext> options)
             : base(options)
-        {
+        {            
         }
 
         public DbSet<Product> Products { get; set; }

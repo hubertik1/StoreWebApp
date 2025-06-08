@@ -1,18 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StoreWebApp.Models
 {
-    public class Product
+    public class Comment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
-
-        [Required, MaxLength(150)]
-        public string Title { get; set; } = string.Empty;
 
         [Required]
         public string Description { get; set; } = string.Empty;
@@ -21,10 +17,8 @@ namespace StoreWebApp.Models
 
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
-        public string? ImageUrl { get; set; }
-
-        /* ─────── navigation ─────── */
-        public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
-        public ICollection<Category> Categories { get; set; } = new HashSet<Category>();
+        /* ─────── FK → Product ─────── */
+        public long ProductId { get; set; }
+        public Product Product { get; set; } = null!;
     }
 }

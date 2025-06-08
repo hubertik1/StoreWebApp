@@ -1,43 +1,92 @@
-using StoreWebApp.Models;
+// File: SeedData.cs
+using System;
 using System.Linq;
+using System.Collections.Generic;
+using StoreWebApp.Models;
+using StoreWebApp.Data;
 
 namespace StoreWebApp.Data
 {
     public static class SeedData
     {
-        public static void Initialize(StoreWebAppContext context)
+        public static void Initialize(StoreDbContext context)
         {
             if (context.Products.Any())
                 return;
 
-            context.Products.AddRange(
-                new Product {
+            var categoryVehicles = new Category { Name = "Vehicles", IsDeleted = false };
+            var categoryTools    = new Category { Name = "Tools", IsDeleted = false };
+            var categoryToys     = new Category { Name = "Toys", IsDeleted = false };
+            var categoryFood     = new Category { Name = "Food", IsDeleted = false };
+
+            context.Set<Category>().AddRange(categoryVehicles, categoryTools, categoryToys, categoryFood);
+            context.SaveChanges();
+
+            var products = new Product[]
+            {
+                new Product
+                {
                     Title = "SPAWARKA 330A INWERTOROWA MMA Elektrodowa TigLift Pulse",
                     Description = "Profesjonalna spawarka inwertorowa o mocy 200 A, idealna do prac warsztatowych i domowych.",
-                    ImageUrl = "images/spawarka.jpg"
+                    IsDeleted = false,
+                    CreationDate = DateTime.Now,
+                    ImageUrl = "images/spawarka.jpg",
+                    Categories = new List<Category> { categoryTools }
                 },
-                new Product {
+                new Product
+                {
                     Title = "Little Tikes Lt Piaskownica Żółw",
                     Description = "Oto Twój niezwykły kącik zabaw - zamykana piaskownica Żółw od renomowanej marki Little Tikes, lidera wśród dostawców placów zabaw i zabawek ogrodowych.",
-                    ImageUrl = "images/piaskownica.webp"
+                    IsDeleted = false,
+                    CreationDate = DateTime.Now,
+                    ImageUrl = "images/piaskownica.webp",
+                    Categories = new List<Category> { categoryToys }
                 },
-                new Product {
+                new Product
+                {
                     Title = "Pomidory Warzywo",
-                    Description = "Pomidor charakteryzuje się słodkim smakiem, jędrną czerwoną skórką i soczystym miąższem. To niezwykle popularne warzywo, które pojawiło się w Europie w XVI w.",
-                    ImageUrl = "images/pomidor.jpg"
+                    Description = "Pomidor charakteryzuje się słodkim smakiem, jędrną czerwoną skórką i soczystym miąższem.",
+                    IsDeleted = false,
+                    CreationDate = DateTime.Now,
+                    ImageUrl = "images/pomidor.jpg",
+                    Categories = new List<Category> { categoryFood }
                 },
-                new Product {
+                new Product
+                {
                     Title = "Fiat Seicento Sporting",
-                    Description = "Dzień dobry mamy do sprzedania seicento 1.1 2001 Stan techniczny dobry syn jeździł cały rok po otrzymaniu prawa jazdy. Wizualne średnio nie opłacił się malować progów i klapy.",
-                    ImageUrl = "images/seicento.webp"
+                    Description = "Dzień dobry mamy do sprzedania seicento 1.1 2001. Stan techniczny dobry, syn jeździł cały rok.",
+                    IsDeleted = false,
+                    CreationDate = DateTime.Now,
+                    ImageUrl = "images/seicento.webp",
+                    Categories = new List<Category> { categoryVehicles },
+                    Comments = new List<Comment>
+                    {
+                        new Comment
+                        {
+                            Description = "Siedzenia zostały wymienione na dobre ale w innym kolorze.",
+                            IsDeleted = false,
+                            CreationDate = DateTime.Now
+                        },
+                        new Comment
+                        {
+                            Description = "Radio sprawne gra centralny zamek z kluczyka sprawny.",
+                            IsDeleted = false,
+                            CreationDate = DateTime.Now
+                        }
+                    }
                 },
-                new Product {
+                new Product
+                {
                     Title = "Eko Mak Makaron Babuni Świderek",
-                    Description = "Eko Mak Makaron Babuni świderek 45 1kg Makarony Babuni to najwyższej jakości wyroby, które, swoim wyśmienitym i niepowtarzalnym smakiem trafiają do coraz liczniejszego grona smakoszy.",
-                    ImageUrl = "images/swiderki.png"
+                    Description = "Eko Mak Makaron Babuni świderek 45 1kg. Makarony Babuni to najwyższej jakości wyroby, które swoim niepowtarzalnym smakiem trafiają do grona smakoszy.",
+                    IsDeleted = false,
+                    CreationDate = DateTime.Now,
+                    ImageUrl = "images/swiderki.png",
+                    Categories = new List<Category> { categoryFood }
                 }
-            );
+            };
 
+            context.Products.AddRange(products);
             context.SaveChanges();
         }
     }
