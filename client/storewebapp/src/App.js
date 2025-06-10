@@ -35,10 +35,7 @@ const App = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
-          <div className="user-info">
-            {username}
-            <button onClick={handleLogout} className="logout-button">Wyloguj</button>
-          </div>
+  };
 
   return (
     <div className="App">
@@ -53,13 +50,15 @@ const App = () => {
           />
         </div>
         {token && (
-          <div className="user-info">{username}</div>
+          <div className="user-section">
+            <span className="user-info">{username}</span>
+            <button className="logout-btn" onClick={handleLogout}>Wyloguj</button>
+          </div>
         )}
       </header>
       <div className="container">
         {token ? (
           <>
-            <button onClick={handleLogout}>Wyloguj</button>
             <AddProductForm onAdd={handleAdded} token={token} />
           </>
         ) : (
