@@ -263,6 +263,29 @@
   font-size: 0.8rem;
 }
 
+.users-button {
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.user-panel {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.user-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
   justify-content: space-between;
   background: #f0f0f0;
   padding: 4px 8px;

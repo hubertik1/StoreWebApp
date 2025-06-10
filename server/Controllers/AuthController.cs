@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using StoreWebApp.Data;
 using StoreWebApp.Models;
@@ -22,6 +23,31 @@ namespace StoreWebApp.Controllers
             _context = context;
             _hasher = hasher;
             _config = config;
+        }
+
+        [HttpGet("users")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetUsers()
+        {
+            var users = _context.Users
+                .Select(u => new { u.Id, u.Username, u.Role })
+                .ToList();
+            return Ok(users);
+        }
+
+        [HttpPost("updateRole/{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult UpdateRole(long id, [FromBody] UpdateRoleDto dto)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+            if (user == null)
+                return NotFound();
+            if (dto.Role != "Admin" && dto.Role != "User")
+                return BadRequest();
+
+            user.Role = dto.Role;
+            _context.SaveChanges();
+            return NoContent();
         }
 
         [HttpPost("register")]
@@ -83,5 +109,10 @@ namespace StoreWebApp.Controllers
     {
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
+    }
+
+    public class UpdateRoleDto
+    {
+        public string Role { get; set; } = string.Empty;
     }
 }

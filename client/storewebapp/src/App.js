@@ -4,6 +4,7 @@ import ProductList from './components/ProductList';
 import AddProductForm from './components/AddProductForm';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import UserAdminPanel from './components/UserAdminPanel';
 
 const App = () => {
   const [search, setSearch] = useState('');
@@ -14,6 +15,7 @@ const App = () => {
   const [token, setToken] = useState(storedToken && storedToken !== 'undefined' ? storedToken : null);
   const [role, setRole] = useState(storedRole && storedRole !== 'undefined' ? storedRole : null);
   const [username, setUsername] = useState(storedUser && storedUser !== 'undefined' ? storedUser : '');
+  const [showUsers, setShowUsers] = useState(false);
 
   const handleAdded = () => {
     setRefresh(r => r + 1);
@@ -50,6 +52,10 @@ const App = () => {
           />
         </div>
         {token && (
+            {role === 'Admin' && (
+              <button onClick={() => setShowUsers(s => !s)} className="users-button">Użytkownicy</button>
+            )}
+            {role === 'Admin' && showUsers && <UserAdminPanel token={token} />}
           <div className="user-section">
             <span className="user-info">{username}</span>
             <button className="logout-btn" onClick={handleLogout}>Wyloguj</button>
