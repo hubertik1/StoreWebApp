@@ -3,7 +3,7 @@ import ProductCard from './ProductCard';
 
 const API_URL = 'http://localhost:5042/';
 
-const ProductList = ({ search, refresh }) => {
+const ProductList = ({ search, refresh, token, isAdmin }) => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -30,7 +30,10 @@ const ProductList = ({ search, refresh }) => {
   };
 
   const handleDelete = id => {
-    fetch(`${API_URL}api/storewebapp/DeleteProduct/${id}`, { method: 'DELETE' })
+    fetch(`${API_URL}api/storewebapp/DeleteProduct/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then(() => setProducts(prev => prev.filter(p => p.id !== id)))
       .catch(() => {});
   };
@@ -47,6 +50,7 @@ const ProductList = ({ search, refresh }) => {
             product={product}
             apiUrl={API_URL}
             onDelete={handleDelete}
+            isAdmin={isAdmin}
           />
         ))}
       </div>

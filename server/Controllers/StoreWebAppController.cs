@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using StoreWebApp.Data;
 using StoreWebApp.Models;
@@ -22,6 +23,7 @@ namespace StoreWebApp.Controllers
 
         [HttpGet]
         [Route("GetCategories")]
+        [AllowAnonymous]
         public ActionResult<IEnumerable<Category>> GetCategories()
         {
             var categories = _context.Category
@@ -33,6 +35,7 @@ namespace StoreWebApp.Controllers
 
         [HttpGet]
         [Route("GetProducts")]
+        [AllowAnonymous]
         public ActionResult<PagedResult<Product>> GetProducts(
             [FromQuery] string? search,
             [FromQuery] int page = 1,
@@ -69,6 +72,7 @@ namespace StoreWebApp.Controllers
 
         [HttpPost]
         [Route("AddProduct")]
+        [Authorize]
         public ActionResult<Product> AddProduct([FromBody] Product product)
         {
             _context.Products.Add(product);
@@ -78,6 +82,7 @@ namespace StoreWebApp.Controllers
 
         [HttpPost]
         [Route("UploadProduct")]
+        [Authorize]
         public async Task<ActionResult<Product>> UploadProduct(
             [FromForm] string title,
             [FromForm] string description,
@@ -127,6 +132,7 @@ namespace StoreWebApp.Controllers
 
         [HttpPut]
         [Route("UpdateProduct/{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateProduct(long id, [FromBody] Product updatedProduct)
         {
             if (id != updatedProduct.Id)
@@ -151,6 +157,7 @@ namespace StoreWebApp.Controllers
 
         [HttpDelete]
         [Route("DeleteProduct/{id}")]
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteProduct(long id)
         {
             var product = _context.Products.FirstOrDefault(p => p.Id == id);

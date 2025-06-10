@@ -180,3 +180,13 @@
   padding: 8px 16px;
   cursor: pointer;
 }
+
+.login-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.login-form input {
+  padding: 4px;
+}

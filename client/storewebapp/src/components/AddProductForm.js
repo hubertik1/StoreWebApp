@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const API_URL = 'http://localhost:5042/';
 
-const AddProductForm = ({ onAdd }) => {
+const AddProductForm = ({ onAdd, token }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
@@ -30,6 +30,9 @@ const AddProductForm = ({ onAdd }) => {
 
     fetch(`${API_URL}api/storewebapp/UploadProduct`, {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     })
       .then(res => res.json())
