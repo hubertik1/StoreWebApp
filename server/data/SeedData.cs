@@ -97,14 +97,14 @@ namespace StoreWebApp.Data
                     {
                         new Comment
                         {
-                            Description = "Siedzenia zostały wymienione, ale w innym kolorze.",
+                            Description = "Seicento to klasyk! Mam model z 2000 roku i choć korozja daje się we znaki, to silnik 1.1 SPI wciąż działa bez zarzutu.",
                             IsDeleted = false,
                             CreationDate = DateTime.Now,
                             CreatorUserId = adminUser.Id
                         },
                         new Comment
                         {
-                            Description = "Radio sprawne, centralny zamek działa poprawnie.",
+                            Description = "Seicento to idealny miejski wojownik – wszędzie się wciśnie, mało pali i jest zaskakująco zwinne.",
                             IsDeleted = false,
                             CreationDate = DateTime.Now,
                             CreatorUserId = adminUser.Id
