@@ -177,6 +177,61 @@ namespace StoreWebApp.Controllers
             _context.SaveChanges();
             return NoContent();
         }
+
+        [HttpGet("GetComments/{productId}")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<Comment>> GetComments(long productId)
+        {
+            var comments = _context.Comment
+                .Where(c => c.ProductId == productId && !c.IsDeleted)
+                .AsNoTracking()
+                .ToList();
+            return Ok(comments);
+        }
+
+        [HttpPost("AddComment")]
+        [Authorize]
+        public ActionResult<Comment> AddComment([FromBody] CommentDto dto)
+        {
+            if (!_context.Products.Any(p => p.Id == dto.ProductId && !p.IsDeleted))
+                return NotFound();
+
+            var comment = new Comment
+            {
+                Description = dto.Description,
+                ProductId = dto.ProductId,
+                IsDeleted = false,
+                CreationDate = DateTime.UtcNow
+            };
+
+            if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
+            {
+                comment.CreatorUserId = uid;
+            }
+
+            _context.Comment.Add(comment);
+            _context.SaveChanges();
+            return Ok(comment);
+        }
+
+        [HttpDelete("DeleteComment/{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteComment(long id)
+        {
+            var comment = _context.Comment.FirstOrDefault(c => c.Id == id);
+            if (comment == null)
+                return NotFound();
+
+            comment.IsDeleted = true;
+            _context.SaveChanges();
+            return NoContent();
+        }
+    }
+
+    public class CommentDto
+    {
+        public string Description { get; set; } = string.Empty;
+        public long ProductId { get; set; }
     }
 
 

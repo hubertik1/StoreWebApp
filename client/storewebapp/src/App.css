@@ -196,3 +196,28 @@
   padding: 4px;
 }
 
+.comments {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.comment {
+  display: flex;
+  justify-content: space-between;
+  background: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.comment-form {
+  display: flex;
+  gap: 4px;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 4px;
+}
+

@@ -51,6 +51,7 @@ const ProductList = ({ search, refresh, token, isAdmin }) => {
             apiUrl={API_URL}
             onDelete={handleDelete}
             isAdmin={isAdmin}
+            token={token}
           />
         ))}
       </div>
