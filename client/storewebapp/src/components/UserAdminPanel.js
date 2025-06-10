@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 const API_URL = 'http://localhost:5042/';
 
-const UserAdminPanel = ({ token }) => {
+const UserAdminPanel = ({ token, show }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    if (!token) return;
     fetch(`${API_URL}api/auth/users`, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -32,11 +33,14 @@ const UserAdminPanel = ({ token }) => {
   };
 
   return (
-    <div className="user-panel">
+    <div className={`user-panel ${show ? 'open' : ''}`}>
       {users.map(u => (
         <div key={u.id} className="user-row">
           <span>{u.username}</span>
-          <select value={u.role} onChange={e => changeRole(u.id, e.target.value)}>
+          <select
+            value={u.role}
+            onChange={e => changeRole(u.id, e.target.value)}
+          >
             <option value="User">User</option>
             <option value="Admin">Admin</option>
           </select>

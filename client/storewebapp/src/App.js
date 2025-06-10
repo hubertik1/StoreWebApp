@@ -9,9 +9,11 @@ import UserAdminPanel from './components/UserAdminPanel';
 const App = () => {
   const [search, setSearch] = useState('');
   const [refresh, setRefresh] = useState(0);
+
   const storedToken = localStorage.getItem('token');
   const storedRole = localStorage.getItem('role');
   const storedUser = localStorage.getItem('username');
+
   const [token, setToken] = useState(
     storedToken && storedToken !== 'undefined' ? storedToken : null
   );
@@ -23,9 +25,7 @@ const App = () => {
   );
   const [showUsers, setShowUsers] = useState(false);
 
-  const handleAdded = () => {
-    setRefresh(r => r + 1);
-  };
+  const handleAdded = () => setRefresh(r => r + 1);
 
   const handleAuth = (tok, rl, user) => {
     setToken(tok);
@@ -49,6 +49,7 @@ const App = () => {
     <div className="App">
       <header className="header">
         <h1>Sklep Wszystko i Nic</h1>
+
         <div className="search-container">
           <input
             type="text"
@@ -57,6 +58,7 @@ const App = () => {
             onChange={e => setSearch(e.target.value)}
           />
         </div>
+
         {token && (
           <div className="user-section">
             <span className="user-info">{username}</span>
@@ -66,25 +68,26 @@ const App = () => {
           </div>
         )}
       </header>
-      
-      {token && role === 'Admin' && (
-        <div className="admin-button-container">
-          <button
-            className="users-button"
-            onClick={() => setShowUsers(s => !s)}
-          >
-            Użytkownicy
-          </button>
-        </div>
-      )}
 
-      {token && role === 'Admin' && showUsers && <UserAdminPanel token={token} />}
+      {token && role === 'Admin' && (
+        <>
+          <div className="admin-button-container">
+            <button
+              className="users-button"
+              onClick={() => setShowUsers(s => !s)}
+            >
+              Użytkownicy
+            </button>
+          </div>
+
+          {/* Panel jest stale w DOM-ie – tylko wsuwa / wysuwa się z boku */}
+          <UserAdminPanel token={token} show={showUsers} />
+        </>
+      )}
 
       <div className="container">
         {token ? (
-          <>
-            <AddProductForm onAdd={handleAdded} token={token} />
-          </>
+          <AddProductForm onAdd={handleAdded} token={token} />
         ) : (
           <>
             <LoginForm onLogin={handleAuth} />
@@ -92,14 +95,16 @@ const App = () => {
           </>
         )}
       </div>
+
       <ProductList
         search={search}
         refresh={refresh}
         token={token}
         isAdmin={role === 'Admin'}
       />
+
       <footer className="footer">
-        <p>&copy; 2025 Sklep Wszystko i Nic. All rights reserved.</p>
+        <p>&copy; 2025 Sklep Wszystko i Nic. Wszelkie prawa zastrzeżone.</p>
       </footer>
     </div>
   );
