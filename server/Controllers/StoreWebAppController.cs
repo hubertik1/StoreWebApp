@@ -182,7 +182,7 @@ namespace StoreWebApp.Controllers
         [AllowAnonymous]
         public ActionResult<IEnumerable<Comment>> GetComments(long productId)
         {
-            var comments = _context.Comment
+            var comments = _context.Comments
                 .Where(c => c.ProductId == productId && !c.IsDeleted)
                 .AsNoTracking()
                 .ToList();
@@ -209,7 +209,7 @@ namespace StoreWebApp.Controllers
                 comment.CreatorUserId = uid;
             }
 
-            _context.Comment.Add(comment);
+            _context.Comments.Add(comment);
             _context.SaveChanges();
             return Ok(comment);
         }
@@ -218,7 +218,7 @@ namespace StoreWebApp.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteComment(long id)
         {
-            var comment = _context.Comment.FirstOrDefault(c => c.Id == id);
+            var comment = _context.Comments.FirstOrDefault(c => c.Id == id);
             if (comment == null)
                 return NotFound();
 
