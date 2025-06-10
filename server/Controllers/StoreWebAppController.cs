@@ -27,8 +27,11 @@ namespace StoreWebApp.Controllers
         [AllowAnonymous]
         public ActionResult<IEnumerable<Category>> GetCategories()
         {
-            var categories = _context.Categories
-                .Where(c => !c.IsDeleted)
+            var query = _context.Products.AsQueryable();
+            if (!User.IsInRole("Admin"))
+            {
+                query = query.Where(p => !p.IsDeleted);
+            }
                 .AsNoTracking()
                 .ToList();
             return Ok(categories);
@@ -178,12 +181,32 @@ namespace StoreWebApp.Controllers
             return NoContent();
         }
 
+        [HttpPost]
+        [Route("RestoreProduct/{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult RestoreProduct(long id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+                return NotFound();
+
+            product.IsDeleted = false;
+            _context.SaveChanges();
+            return NoContent();
+        }
+
         [HttpGet("GetComments/{productId}")]
         [AllowAnonymous]
         public ActionResult<IEnumerable<Comment>> GetComments(long productId)
         {
-            var comments = _context.Comments
-                .Where(c => c.ProductId == productId && !c.IsDeleted)
+            var commentsQuery = _context.Comment
+                .Where(c => c.ProductId == productId);
+            if (!User.IsInRole("Admin"))
+            {
+                commentsQuery = commentsQuery.Where(c => !c.IsDeleted);
+            }
+
+            var comments = commentsQuery
                 .AsNoTracking()
                 .ToList();
             return Ok(comments);
@@ -209,6 +232,19 @@ namespace StoreWebApp.Controllers
                 comment.CreatorUserId = uid;
             }
 
+
+        [HttpPost("RestoreComment/{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult RestoreComment(long id)
+        {
+            var comment = _context.Comment.FirstOrDefault(c => c.Id == id);
+            if (comment == null)
+                return NotFound();
+
+            comment.IsDeleted = false;
+            _context.SaveChanges();
+            return NoContent();
+        }
             _context.Comments.Add(comment);
             _context.SaveChanges();
             return Ok(comment);

@@ -20,7 +20,8 @@ const ProductList = ({ search, refresh, token, isAdmin }) => {
     const params = new URLSearchParams();
     if (term) params.append('search', term);
     params.append('page', pageNum);
-    fetch(`${API_URL}api/storewebapp/GetProducts?${params.toString()}`)
+    fetch(`${API_URL}api/storewebapp/GetProducts?${params.toString()}`,
+      token ? { headers: { Authorization: `Bearer ${token}` } } : undefined)
       .then(res => res.json())
       .then(data => {
         setProducts(data.items);
@@ -29,12 +30,20 @@ const ProductList = ({ search, refresh, token, isAdmin }) => {
       .catch(() => {});
   };
 
-  const handleDelete = id => {
-    fetch(`${API_URL}api/storewebapp/DeleteProduct/${id}`, {
-      method: 'DELETE',
+  const handleDelete = (id, isDeleted) => {
+    const url = `${API_URL}api/storewebapp/${isDeleted ? 'RestoreProduct' : 'DeleteProduct'}/${id}`;
+    const method = isDeleted ? 'POST' : 'DELETE';
+    fetch(url, {
+      method,
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(() => setProducts(prev => prev.filter(p => p.id !== id)))
+      .then(() =>
+        setProducts(prev =>
+          prev.map(p =>
+            p.id === id ? { ...p, isDeleted: !isDeleted } : p
+          )
+        )
+      )
       .catch(() => {});
   };
 

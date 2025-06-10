@@ -5,11 +5,12 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
   const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
-    fetch(`${apiUrl}api/storewebapp/GetComments/${product.id}`)
+    fetch(`${apiUrl}api/storewebapp/GetComments/${product.id}`,
+      token ? { headers: { Authorization: `Bearer ${token}` } } : undefined)
       .then(res => res.json())
       .then(data => setComments(data))
       .catch(() => {});
-  }, [product.id]);
+  }, [product.id, token, apiUrl]);
 
   const handleAdd = e => {
     e.preventDefault();
@@ -29,12 +30,20 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
       .catch(() => {});
   };
 
-  const handleDelete = id => {
-    fetch(`${apiUrl}api/storewebapp/DeleteComment/${id}`, {
-      method: 'DELETE',
+  const handleDelete = (id, isDeleted) => {
+    const url = `${apiUrl}api/storewebapp/${isDeleted ? 'RestoreComment' : 'DeleteComment'}/${id}`;
+    const method = isDeleted ? 'POST' : 'DELETE';
+    fetch(url, {
+      method,
       headers: { Authorization: `Bearer ${token}` }
     })
-      .then(() => setComments(prev => prev.filter(c => c.id !== id)))
+      .then(() =>
+        setComments(prev =>
+          prev.map(c =>
+            c.id === id ? { ...c, isDeleted: !isDeleted } : c
+          )
+        )
+      )
       .catch(() => {});
   };
   return (
@@ -47,13 +56,23 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
         )}
         <div className="product-details">
           <div className="details-text">
-            <h3>{product.title}</h3>
+            <h3>
+              {product.title}
+              {isAdmin && product.isDeleted && (
+                <span className="hidden-label"> (niewidoczne)</span>
+              )}
+            </h3>
             <p>{product.description}</p>
           </div>
           <div>
             <button className="buy-button">Do koszyka</button>
             {isAdmin && (
-              <button className="delete-button" onClick={() => onDelete(product.id)}>Usuń</button>
+              <button
+                className="delete-button"
+                onClick={() => onDelete(product.id, product.isDeleted)}
+              >
+                {product.isDeleted ? 'Dodaj' : 'Usuń'}
+              </button>
             )}
           </div>
         </div>
@@ -61,9 +80,19 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
       <div className="comments">
         {comments.map(c => (
           <div key={c.id} className="comment">
-            <span>{c.description}</span>
+            <span>
+              {c.description}
+              {isAdmin && c.isDeleted && (
+                <span className="hidden-label"> (niewidoczne)</span>
+              )}
+            </span>
             {isAdmin && (
-              <button onClick={() => handleDelete(c.id)} className="comment-delete-button">Usuń</button>
+              <button
+                onClick={() => handleDelete(c.id, c.isDeleted)}
+                className="comment-delete-button"
+              >
+                {c.isDeleted ? 'Dodaj' : 'Usuń'}
+              </button>
             )}
           </div>
         ))}
