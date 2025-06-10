@@ -5,8 +5,6 @@ const API_URL = 'http://localhost:5042/';
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [isError, setIsError] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -23,18 +21,16 @@ const LoginForm = ({ onLogin }) => {
         return res.json();
       })
       .then(data => {
-        setIsError(false);
-        setMessage('Logged in');
         onLogin(data.token, data.role, data.username);
+        alert('Logged in');
       })
       .catch(err => {
-        setIsError(true);
         if (err.message.includes('User not found')) {
-          setMessage('This account does not exist. Please register');
+          alert('This account does not exist. Please register');
         } else if (err.message.includes('Wrong password')) {
-          setMessage('Incorrect password');
+          alert('Incorrect password');
         } else {
-          setMessage('Login failed');
+          alert('Login failed');
         }
       });
   };
@@ -56,9 +52,6 @@ const LoginForm = ({ onLogin }) => {
         required
       />
       <button type="submit">Zaloguj</button>
-      {message && (
-        <div className={`notification ${isError ? 'error' : ''}`}>{message}</div>
-      )}
     </form>
   );
 };
