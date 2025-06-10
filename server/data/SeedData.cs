@@ -1,9 +1,9 @@
-// File: SeedData.cs
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using StoreWebApp.Models;
 using StoreWebApp.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace StoreWebApp.Data
 {
@@ -14,7 +14,7 @@ namespace StoreWebApp.Data
             var adminUser = context.Users.FirstOrDefault(u => u.Username == "admin");
             if (adminUser == null)
             {
-                var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<User>();
+                var hasher = new PasswordHasher<User>();
                 adminUser = new User { Username = "admin", Role = "Admin" };
                 adminUser.PasswordHash = hasher.HashPassword(adminUser, "admin");
                 context.Users.Add(adminUser);
@@ -40,8 +40,8 @@ namespace StoreWebApp.Data
                     Description = "Profesjonalna spawarka inwertorowa o mocy 200 A, idealna do prac warsztatowych i domowych.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
-                    ImageUrl = "images/spawarka.jpg",
                     CreatorUserId = adminUser.Id,
+                    ImageUrl = "images/spawarka.jpg",
                     Categories = new List<Category> { categoryTools }
                 },
                 new Product
@@ -50,8 +50,8 @@ namespace StoreWebApp.Data
                     Description = "Oto Twój niezwykły kącik zabaw - zamykana piaskownica Żółw od renomowanej marki Little Tikes, lidera wśród dostawców placów zabaw i zabawek ogrodowych.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
-                    ImageUrl = "images/piaskownica.webp",
                     CreatorUserId = adminUser.Id,
+                    ImageUrl = "images/piaskownica.webp",
                     Categories = new List<Category> { categoryToys }
                 },
                 new Product
@@ -60,17 +60,14 @@ namespace StoreWebApp.Data
                     Description = "Pomidor charakteryzuje się słodkim smakiem, jędrną czerwoną skórką i soczystym miąższem.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
-                    ImageUrl = "images/pomidor.jpg",
                     CreatorUserId = adminUser.Id,
+                    ImageUrl = "images/pomidor.jpg",
                     Categories = new List<Category> { categoryFood }
                 },
                 new Product
                 {
-                    CreatorUserId = adminUser.Id,
-                            CreationDate = DateTime.Now,
-                            CreatorUserId = adminUser.Id
-                            CreationDate = DateTime.Now,
-                            CreatorUserId = adminUser.Id
+                    Title = "Pizza Gastro-Net",
+                    Description = "Pizza z Gastro-Netu to grube, niedopieczone ciasto z cienką warstwą sera i kawałkami szynki. Tekstura jest gumowata, składniki niskiej jakości, a wygląd mało zachęcający. Całość wydaje się mało staranna i niezbyt smaczna.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
                     CreatorUserId = adminUser.Id,
@@ -89,9 +86,10 @@ namespace StoreWebApp.Data
                 new Product
                 {
                     Title = "Fiat Seicento Sporting",
-                    Description = "Dzień dobry mamy do sprzedania seicento 1.1 2001. Stan techniczny dobry, syn jeździł cały rok.",
+                    Description = "Dzień dobry, mamy do sprzedania seicento 1.1 2001. Stan techniczny dobry, syn jeździł cały rok.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
+                    CreatorUserId = adminUser.Id,
                     ImageUrl = "images/seicento.webp",
                     Categories = new List<Category> { categoryVehicles },
                     Comments = new List<Comment>
@@ -99,14 +97,16 @@ namespace StoreWebApp.Data
                         new Comment
                         {
                             Description = "Siedzenia zostały wymienione na dobre ale w innym kolorze.",
+                            CreationDate = DateTime.Now,
                             IsDeleted = false,
-                            CreationDate = DateTime.Now
+                            CreatorUserId = adminUser.Id,
                         },
                         new Comment
                         {
-                            Description = "Radio sprawne gra centralny zamek z kluczyka sprawny.",
+                            Description = "Radio sprawne, gra, centralny zamek z kluczyka sprawny.",
+                            CreationDate = DateTime.Now,
                             IsDeleted = false,
-                            CreationDate = DateTime.Now
+                            CreatorUserId = adminUser.Id,
                         }
                     }
                 },
@@ -116,7 +116,8 @@ namespace StoreWebApp.Data
                     Description = "Eko Mak Makaron Babuni świderek 45 1kg. Makarony Babuni to najwyższej jakości wyroby, które swoim niepowtarzalnym smakiem trafiają do grona smakoszy.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
-                    ImageUrl = "images/swiderki.png",
+                    CreatorUserId = adminUser.Id,
+                    ImageUrl = "images/swiderki.png",                
                     Categories = new List<Category> { categoryFood }
                 }
             };
