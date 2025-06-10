@@ -53,6 +53,24 @@ namespace StoreWebApp.Data
                 },
                 new Product
                 {
+                    Title = "Pizza Gastro-Net",
+                    Description = "Pizza z Gastro-Netu to grube, niedopieczone ciasto z cienką warstwą sera i kawałkami szynki. Tekstura jest gumowata, składniki niskiej jakości, a wygląd mało zachęcający. Całość wydaje się mało staranna i niezbyt smaczna.",
+                    IsDeleted = false,
+                    CreationDate = DateTime.Now,
+                    ImageUrl = "images/pizza.jpeg",
+                    Categories = new List<Category> { categoryFood },
+                    Comments = new List<Comment>
+                    {
+                        new Comment
+                        {
+                            Description = "Kupiłem tę pizzę z Gastro-Netu i muszę przyznać, że jestem mocno rozczarowany. Ciasto było za grube i lekko niedopieczone, ser praktycznie bez smaku, a dodatki bardzo skąpe. Raczej nie spróbuję jej ponownie i nie polecam innym studentom.",
+                            IsDeleted = false,
+                            CreationDate = DateTime.Now
+                        }
+                    }
+                },
+                new Product
+                {
                     Title = "Fiat Seicento Sporting",
                     Description = "Dzień dobry mamy do sprzedania seicento 1.1 2001. Stan techniczny dobry, syn jeździł cały rok.",
                     IsDeleted = false,
