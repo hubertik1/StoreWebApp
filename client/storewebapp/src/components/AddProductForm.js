@@ -9,7 +9,6 @@ const AddProductForm = ({ onAdd }) => {
   const [drag, setDrag] = useState(false);
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState('');
-  const [newCategory, setNewCategory] = useState('');
   const fileInput = useRef(null);
 
   useEffect(() => {
@@ -24,9 +23,7 @@ const AddProductForm = ({ onAdd }) => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    if (newCategory.trim()) {
-      formData.append('newCategory', newCategory.trim());
-    } else if (categoryId) {
+    if (categoryId) {
       formData.append('categoryId', categoryId);
     }
     if (image) formData.append('image', image);
@@ -42,7 +39,6 @@ const AddProductForm = ({ onAdd }) => {
         setDescription('');
         setImage(null);
         setCategoryId('');
-        setNewCategory('');
       })
       .catch(() => {});
   };
@@ -85,12 +81,6 @@ const AddProductForm = ({ onAdd }) => {
           <option key={cat.id} value={cat.id}>{cat.name}</option>
         ))}
       </select>
-      <input
-        type="text"
-        placeholder="Nowa kategoria"
-        value={newCategory}
-        onChange={e => setNewCategory(e.target.value)}
-      />
       <textarea
         placeholder="Opis produktu"
         value={description}

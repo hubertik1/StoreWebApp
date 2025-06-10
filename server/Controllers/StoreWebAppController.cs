@@ -82,7 +82,6 @@ namespace StoreWebApp.Controllers
             [FromForm] string title,
             [FromForm] string description,
             [FromForm] long? categoryId,
-            [FromForm] string? newCategory,
             [FromForm] IFormFile? image)
         {
             string? imageUrl = null;
@@ -110,12 +109,7 @@ namespace StoreWebApp.Controllers
             };
 
             Category? category = null;
-            if (!string.IsNullOrWhiteSpace(newCategory))
-            {
-                category = new Category { Name = newCategory, IsDeleted = false };
-                _context.Category.Add(category);
-            }
-            else if (categoryId.HasValue)
+            if (categoryId.HasValue)
             {
                 category = _context.Category.FirstOrDefault(c => c.Id == categoryId.Value && !c.IsDeleted);
             }
