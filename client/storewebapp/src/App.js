@@ -8,25 +8,33 @@ import RegisterForm from './components/RegisterForm';
 const App = () => {
   const [search, setSearch] = useState('');
   const [refresh, setRefresh] = useState(0);
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [role, setRole] = useState(localStorage.getItem('role'));
+  const storedToken = localStorage.getItem('token');
+  const storedRole = localStorage.getItem('role');
+  const storedUser = localStorage.getItem('username');
+  const [token, setToken] = useState(storedToken && storedToken !== 'undefined' ? storedToken : null);
+  const [role, setRole] = useState(storedRole && storedRole !== 'undefined' ? storedRole : null);
+  const [username, setUsername] = useState(storedUser && storedUser !== 'undefined' ? storedUser : '');
 
   const handleAdded = () => {
     setRefresh(r => r + 1);
   };
 
-  const handleAuth = (tok, rl) => {
+  const handleAuth = (tok, rl, user) => {
     setToken(tok);
     setRole(rl);
+    setUsername(user);
     localStorage.setItem('token', tok);
     localStorage.setItem('role', rl);
+    localStorage.setItem('username', user);
   };
 
   const handleLogout = () => {
     setToken(null);
     setRole(null);
+    setUsername('');
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('username');
   };
 
   return (
@@ -41,6 +49,9 @@ const App = () => {
             onChange={e => setSearch(e.target.value)}
           />
         </div>
+        {token && (
+          <div className="user-info">{username}</div>
+        )}
       </header>
       <div className="container">
         {token ? (

@@ -39,7 +39,7 @@ namespace StoreWebApp.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return Ok(new { token = GenerateToken(user), role = user.Role });
+            return Ok(new { token = GenerateToken(user), role = user.Role, username = user.Username });
         }
 
         [HttpPost("login")]
@@ -53,7 +53,7 @@ namespace StoreWebApp.Controllers
             if (result == PasswordVerificationResult.Failed)
                 return Unauthorized();
 
-            return Ok(new { token = GenerateToken(user), role = user.Role });
+            return Ok(new { token = GenerateToken(user), role = user.Role, username = user.Username });
         }
 
         private string GenerateToken(User user)

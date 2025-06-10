@@ -13,9 +13,12 @@ const RegisterForm = ({ onRegister }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     })
-      .then(res => res.json())
+      .then(async res => {
+        if (!res.ok) throw new Error('register failed');
+        return res.json();
+      })
       .then(data => {
-        onRegister(data.token, data.role);
+        onRegister(data.token, data.role, data.username);
       })
       .catch(() => {});
   };

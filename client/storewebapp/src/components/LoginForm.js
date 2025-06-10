@@ -13,9 +13,12 @@ const LoginForm = ({ onLogin }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     })
-      .then(res => res.json())
+      .then(async res => {
+        if (!res.ok) throw new Error('login failed');
+        return res.json();
+      })
       .then(data => {
-        onLogin(data.token, data.role);
+        onLogin(data.token, data.role, data.username);
       })
       .catch(() => {});
   };

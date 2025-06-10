@@ -23,6 +23,11 @@
   justify-content: center;
 }
 
+.user-info {
+  margin-left: auto;
+  font-weight: bold;
+}
+
 .search-container input {
   width: 50%;
   min-width: 200px;
