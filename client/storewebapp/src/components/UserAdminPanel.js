@@ -33,7 +33,6 @@ const UserAdminPanel = ({ token }) => {
 
   return (
     <div className="user-panel">
-      <h2>Użytkownicy</h2>
       {users.map(u => (
         <div key={u.id} className="user-row">
           <span>{u.username}</span>

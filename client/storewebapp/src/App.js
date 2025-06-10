@@ -12,9 +12,15 @@ const App = () => {
   const storedToken = localStorage.getItem('token');
   const storedRole = localStorage.getItem('role');
   const storedUser = localStorage.getItem('username');
-  const [token, setToken] = useState(storedToken && storedToken !== 'undefined' ? storedToken : null);
-  const [role, setRole] = useState(storedRole && storedRole !== 'undefined' ? storedRole : null);
-  const [username, setUsername] = useState(storedUser && storedUser !== 'undefined' ? storedUser : '');
+  const [token, setToken] = useState(
+    storedToken && storedToken !== 'undefined' ? storedToken : null
+  );
+  const [role, setRole] = useState(
+    storedRole && storedRole !== 'undefined' ? storedRole : null
+  );
+  const [username, setUsername] = useState(
+    storedUser && storedUser !== 'undefined' ? storedUser : ''
+  );
   const [showUsers, setShowUsers] = useState(false);
 
   const handleAdded = () => {
@@ -52,16 +58,28 @@ const App = () => {
           />
         </div>
         {token && (
-            {role === 'Admin' && (
-              <button onClick={() => setShowUsers(s => !s)} className="users-button">Użytkownicy</button>
-            )}
-            {role === 'Admin' && showUsers && <UserAdminPanel token={token} />}
           <div className="user-section">
             <span className="user-info">{username}</span>
-            <button className="logout-btn" onClick={handleLogout}>Wyloguj</button>
+            <button className="logout-btn" onClick={handleLogout}>
+              Wyloguj
+            </button>
           </div>
         )}
       </header>
+      
+      {token && role === 'Admin' && (
+        <div className="admin-button-container">
+          <button
+            className="users-button"
+            onClick={() => setShowUsers(s => !s)}
+          >
+            Użytkownicy
+          </button>
+        </div>
+      )}
+
+      {token && role === 'Admin' && showUsers && <UserAdminPanel token={token} />}
+
       <div className="container">
         {token ? (
           <>
@@ -74,7 +92,12 @@ const App = () => {
           </>
         )}
       </div>
-      <ProductList search={search} refresh={refresh} token={token} isAdmin={role === 'Admin'} />
+      <ProductList
+        search={search}
+        refresh={refresh}
+        token={token}
+        isAdmin={role === 'Admin'}
+      />
       <footer className="footer">
         <p>&copy; 2025 Sklep Wszystko i Nic. All rights reserved.</p>
       </footer>

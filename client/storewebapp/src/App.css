@@ -263,10 +263,26 @@
   font-size: 0.8rem;
 }
 
+.admin-button-container {
+  position: fixed; 
+  top: 80px;       
+  right: 20px;     
+  width: auto;
+  z-index: 1000;   
+}
+
 .users-button {
-  padding: 4px 8px;
-  font-size: 0.9rem;
+  padding: 2px 6px;        
+  font-size: 0.8rem;        
   cursor: pointer;
+  border: none;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.users-button:hover {
+  background-color: #2980b9;
 }
 
 .user-panel {
