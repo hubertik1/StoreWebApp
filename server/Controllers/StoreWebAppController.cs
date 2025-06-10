@@ -32,6 +32,8 @@ namespace StoreWebApp.Controllers
             {
                 query = query.Where(p => !p.IsDeleted);
             }
+
+            var categories = query
                 .AsNoTracking()
                 .ToList();
             return Ok(categories);
@@ -199,7 +201,7 @@ namespace StoreWebApp.Controllers
         [AllowAnonymous]
         public ActionResult<IEnumerable<Comment>> GetComments(long productId)
         {
-            var commentsQuery = _context.Comment
+            var commentsQuery = _context.Comments
                 .Where(c => c.ProductId == productId);
             if (!User.IsInRole("Admin"))
             {
@@ -232,22 +234,22 @@ namespace StoreWebApp.Controllers
                 comment.CreatorUserId = uid;
             }
 
+            _context.Comments.Add(comment);
+            _context.SaveChanges();
+            return Ok(comment);
+        }
 
         [HttpPost("RestoreComment/{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult RestoreComment(long id)
         {
-            var comment = _context.Comment.FirstOrDefault(c => c.Id == id);
+            var comment = _context.Comments.FirstOrDefault(c => c.Id == id);
             if (comment == null)
                 return NotFound();
 
             comment.IsDeleted = false;
             _context.SaveChanges();
             return NoContent();
-        }
-            _context.Comments.Add(comment);
-            _context.SaveChanges();
-            return Ok(comment);
         }
 
         [HttpDelete("DeleteComment/{id}")]
