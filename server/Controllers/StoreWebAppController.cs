@@ -5,6 +5,8 @@ using StoreWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace StoreWebApp.Controllers
 {
@@ -60,6 +62,43 @@ namespace StoreWebApp.Controllers
         {
             _context.Products.Add(product);
             _context.SaveChanges();
+            return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
+        }
+
+        [HttpPost]
+        [Route("UploadProduct")]
+        public async Task<ActionResult<Product>> UploadProduct(
+            [FromForm] string title,
+            [FromForm] string description,
+            [FromForm] IFormFile? image)
+        {
+            string? imageUrl = null;
+
+            if (image != null && image.Length > 0)
+            {
+                var ext = Path.GetExtension(image.FileName);
+                var fileName = $"{Guid.NewGuid()}{ext}";
+                var imagePath = Path.Combine("wwwroot", "images", fileName);
+
+                Directory.CreateDirectory(Path.GetDirectoryName(imagePath)!);
+                using var stream = new FileStream(imagePath, FileMode.Create);
+                await image.CopyToAsync(stream);
+
+                imageUrl = Path.Combine("images", fileName).Replace("\\", "/");
+            }
+
+            var product = new Product
+            {
+                Title = title,
+                Description = description,
+                ImageUrl = imageUrl,
+                IsDeleted = false,
+                CreationDate = DateTime.UtcNow
+            };
+
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+
             return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
         }
 

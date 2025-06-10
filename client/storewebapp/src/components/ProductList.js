@@ -3,18 +3,18 @@ import ProductCard from './ProductCard';
 
 const API_URL = 'http://localhost:5042/';
 
-const ProductList = ({ search }) => {
+const ProductList = ({ search, refresh }) => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     setPage(1);
-  }, [search]);
+  }, [search, refresh]);
 
   useEffect(() => {
     loadProducts(search, page);
-  }, [search, page]);
+  }, [search, page, refresh]);
 
   const loadProducts = (term, pageNum) => {
     const params = new URLSearchParams();

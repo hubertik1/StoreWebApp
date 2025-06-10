@@ -144,3 +144,39 @@
   padding: 6px 12px;
   cursor: pointer;
 }
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-form input[type="text"],
+.add-form textarea {
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.add-form textarea {
+  resize: vertical;
+}
+
+.drop-zone {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.drop-zone.drag-over {
+  background-color: #f0f0f0;
+}
+
+.add-form button {
+  align-self: flex-start;
+  padding: 8px 16px;
+  cursor: pointer;
+}

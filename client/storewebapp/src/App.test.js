@@ -15,7 +15,7 @@ test('renders search input', () => {
 
 test('renders pagination controls', () => {
   render(<App />);
-  const nextButton = screen.getByRole('button', { name: /Next/i });
+  const nextButton = screen.getByRole('button', { name: />/i });
   expect(nextButton).toBeInTheDocument();
 });
 
