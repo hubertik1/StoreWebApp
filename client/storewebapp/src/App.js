@@ -35,8 +35,10 @@ const App = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
-    alert('Wylogowano');
-  };
+          <div className="user-info">
+            {username}
+            <button onClick={handleLogout} className="logout-button">Wyloguj</button>
+          </div>
 
   return (
     <div className="App">

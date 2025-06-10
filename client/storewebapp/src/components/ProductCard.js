@@ -63,7 +63,7 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
           <div key={c.id} className="comment">
             <span>{c.description}</span>
             {isAdmin && (
-              <button onClick={() => handleDelete(c.id)} className="delete-button">Usuń</button>
+              <button onClick={() => handleDelete(c.id)} className="comment-delete-button">Usuń</button>
             )}
           </div>
         ))}
