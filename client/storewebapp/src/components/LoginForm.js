@@ -22,15 +22,15 @@ const LoginForm = ({ onLogin }) => {
       })
       .then(data => {
         onLogin(data.token, data.role, data.username);
-        alert('Logged in');
+        alert('Zalogowano');
       })
       .catch(err => {
         if (err.message.includes('User not found')) {
-          alert('This account does not exist. Please register');
+          alert('To konto konto nie istnieje');
         } else if (err.message.includes('Wrong password')) {
-          alert('Incorrect password');
+          alert('Nieprawidłowe hasło');
         } else {
-          alert('Login failed');
+          alert('Logowanie nieudane');
         }
       });
   };

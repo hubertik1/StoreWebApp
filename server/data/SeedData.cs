@@ -67,7 +67,7 @@ namespace StoreWebApp.Data
                 new Product
                 {
                     Title = "Pizza Gastro-Net",
-                    Description = "Pizza z Gastro-Netu – grube, niedopieczone ciasto, niskiej jakości składniki i mało apetyczny wygląd.",
+                    Description = "Pizza z Gastro-Netu to grube, niedopieczone ciasto z cienką warstwą sera i kawałkami szynki. Tekstura jest gumowata, składniki niskiej jakości, a wygląd mało zachęcający. Całość wydaje się mało staranna i niezbyt smaczna.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
                     ImageUrl = "images/pizza.jpeg",

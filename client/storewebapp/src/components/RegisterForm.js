@@ -22,13 +22,13 @@ const RegisterForm = ({ onRegister }) => {
       })
       .then(data => {
         onRegister(data.token, data.role, data.username);
-        alert('You have successfully registered');
+        alert('Zarejestrowano pomyślnie');
       })
       .catch(err => {
         if (err.message.includes('User exists')) {
-          alert('An account with this username already exists');
+          alert('Konto o tej nazwie już istnieje');
         } else {
-          alert('Registration failed');
+          alert('Rejestracja nieudana');
         }
       });
   };
