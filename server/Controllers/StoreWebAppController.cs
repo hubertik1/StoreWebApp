@@ -9,6 +9,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace StoreWebApp.Controllers
 {
@@ -22,25 +23,30 @@ namespace StoreWebApp.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        [Route("GetCategories")]
+        // ──────────────────────────────────────────
+        // CATEGORIES
+        // ──────────────────────────────────────────
+        [HttpGet("GetCategories")]
         [AllowAnonymous]
         public ActionResult<IEnumerable<Category>> GetCategories()
         {
-            var query = _context.Products.AsQueryable();
+            // Corrected to query Categories directly
+            var query = _context.Categories.AsQueryable();
+
             if (!User.IsInRole("Admin"))
-            {
-                query = query.Where(p => !p.IsDeleted);
-            }
+                query = query.Where(c => !c.IsDeleted);
 
             var categories = query
                 .AsNoTracking()
                 .ToList();
+
             return Ok(categories);
         }
 
-        [HttpGet]
-        [Route("GetProducts")]
+        // ──────────────────────────────────────────
+        // PRODUCTS
+        // ──────────────────────────────────────────
+        [HttpGet("GetProducts")]
         [AllowAnonymous]
         public ActionResult<PagedResult<Product>> GetProducts(
             [FromQuery] string? search,
@@ -65,77 +71,74 @@ namespace StoreWebApp.Controllers
                 .Include(p => p.Comments)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .AsNoTracking().ToList();
+                .AsNoTracking()
+                .ToList();
 
             var result = new PagedResult<Product>
             {
-                Items = products,
+                Items      = products,
                 TotalPages = totalPages
             };
 
             return Ok(result);
         }
 
-        [HttpPost]
-        [Route("AddProduct")]
+        [HttpPost("AddProduct")]
         [Authorize]
         public ActionResult<Product> AddProduct([FromBody] Product product)
         {
             if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
-            {
                 product.CreatorUserId = uid;
-            }
+
             _context.Products.Add(product);
             _context.SaveChanges();
+
             return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
         }
 
-        [HttpPost]
-        [Route("UploadProduct")]
+        // ──► FIXED ACTION ◄──  (single [FromForm] parameter for Swagger)
+        [HttpPost("UploadProduct")]
         [Authorize]
+        [Consumes("multipart/form-data")]
         public async Task<ActionResult<Product>> UploadProduct(
-            [FromForm] string title,
-            [FromForm] string description,
-            [FromForm] long? categoryId,
-            [FromForm] IFormFile? image)
+            [FromForm] UploadProductDto dto)
         {
+            // Handle file upload
             string? imageUrl = null;
-
-            if (image != null && image.Length > 0)
+            if (dto.Image is { Length: > 0 })
             {
-                var ext = Path.GetExtension(image.FileName);
-                var fileName = $"{Guid.NewGuid()}{ext}";
+                var ext       = Path.GetExtension(dto.Image.FileName);
+                var fileName  = $"{Guid.NewGuid()}{ext}";
                 var imagePath = Path.Combine("wwwroot", "images", fileName);
 
                 Directory.CreateDirectory(Path.GetDirectoryName(imagePath)!);
-                using var stream = new FileStream(imagePath, FileMode.Create);
-                await image.CopyToAsync(stream);
+                await using var stream = new FileStream(imagePath, FileMode.Create);
+                await dto.Image.CopyToAsync(stream);
 
                 imageUrl = Path.Combine("images", fileName).Replace("\\", "/");
             }
 
+            // Create the product
             var product = new Product
             {
-                Title = title,
-                Description = description,
-                ImageUrl = imageUrl,
-                IsDeleted = false,
+                Title        = dto.Title,
+                Description  = dto.Description ?? string.Empty,
+                ImageUrl     = imageUrl,
+                IsDeleted    = false,
                 CreationDate = DateTime.UtcNow
             };
+
             if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
-            {
                 product.CreatorUserId = uid;
-            }
 
-            Category? category = null;
-            if (categoryId.HasValue)
+            // Optional category
+            if (dto.CategoryId is long catId)
             {
-                category = _context.Categories.FirstOrDefault(c => c.Id == categoryId.Value && !c.IsDeleted);
-            }
+                var category = _context.Categories
+                    .FirstOrDefault(c => c.Id == catId && !c.IsDeleted);
 
-            if (category != null)
-            {
-                product.Categories.Add(category);
+                if (category is not null)
+                    product.Categories.Add(category);
             }
 
             _context.Products.Add(product);
@@ -144,8 +147,7 @@ namespace StoreWebApp.Controllers
             return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
         }
 
-        [HttpPut]
-        [Route("UpdateProduct/{id}")]
+        [HttpPut("UpdateProduct/{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult UpdateProduct(long id, [FromBody] Product updatedProduct)
         {
@@ -157,25 +159,25 @@ namespace StoreWebApp.Controllers
                 .Include(p => p.Comments)
                 .FirstOrDefault(p => p.Id == id);
 
-            if (product == null)
+            if (product is null)
                 return NotFound();
 
-            product.Title = updatedProduct.Title;
+            product.Title       = updatedProduct.Title;
             product.Description = updatedProduct.Description;
-            product.ImageUrl = updatedProduct.ImageUrl;
-            product.IsDeleted = updatedProduct.IsDeleted;
+            product.ImageUrl    = updatedProduct.ImageUrl;
+            product.IsDeleted   = updatedProduct.IsDeleted;
+            // Update categories here if needed
 
             _context.SaveChanges();
             return NoContent();
         }
 
-        [HttpDelete]
-        [Route("DeleteProduct/{id}")]
+        [HttpDelete("DeleteProduct/{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteProduct(long id)
         {
             var product = _context.Products.FirstOrDefault(p => p.Id == id);
-            if (product == null)
+            if (product is null)
                 return NotFound();
 
             product.IsDeleted = true;
@@ -183,13 +185,12 @@ namespace StoreWebApp.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        [Route("RestoreProduct/{id}")]
+        [HttpPost("RestoreProduct/{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult RestoreProduct(long id)
         {
             var product = _context.Products.FirstOrDefault(p => p.Id == id);
-            if (product == null)
+            if (product is null)
                 return NotFound();
 
             product.IsDeleted = false;
@@ -197,20 +198,23 @@ namespace StoreWebApp.Controllers
             return NoContent();
         }
 
+        // ──────────────────────────────────────────
+        // COMMENTS
+        // ──────────────────────────────────────────
         [HttpGet("GetComments/{productId}")]
         [AllowAnonymous]
         public ActionResult<IEnumerable<Comment>> GetComments(long productId)
         {
             var commentsQuery = _context.Comments
                 .Where(c => c.ProductId == productId);
+
             if (!User.IsInRole("Admin"))
-            {
                 commentsQuery = commentsQuery.Where(c => !c.IsDeleted);
-            }
 
             var comments = commentsQuery
                 .AsNoTracking()
                 .ToList();
+
             return Ok(comments);
         }
 
@@ -223,19 +227,18 @@ namespace StoreWebApp.Controllers
 
             var comment = new Comment
             {
-                Description = dto.Description,
-                ProductId = dto.ProductId,
-                IsDeleted = false,
+                Description  = dto.Description,
+                ProductId    = dto.ProductId,
+                IsDeleted    = false,
                 CreationDate = DateTime.UtcNow
             };
 
             if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
-            {
                 comment.CreatorUserId = uid;
-            }
 
             _context.Comments.Add(comment);
             _context.SaveChanges();
+
             return Ok(comment);
         }
 
@@ -244,7 +247,7 @@ namespace StoreWebApp.Controllers
         public IActionResult RestoreComment(long id)
         {
             var comment = _context.Comments.FirstOrDefault(c => c.Id == id);
-            if (comment == null)
+            if (comment is null)
                 return NotFound();
 
             comment.IsDeleted = false;
@@ -257,7 +260,7 @@ namespace StoreWebApp.Controllers
         public IActionResult DeleteComment(long id)
         {
             var comment = _context.Comments.FirstOrDefault(c => c.Id == id);
-            if (comment == null)
+            if (comment is null)
                 return NotFound();
 
             comment.IsDeleted = true;
@@ -266,11 +269,18 @@ namespace StoreWebApp.Controllers
         }
     }
 
+    // ──────────────────────────────────────────────
+    // SIMPLE DTOS
+    // ──────────────────────────────────────────────
     public class CommentDto
     {
         public string Description { get; set; } = string.Empty;
-        public long ProductId { get; set; }
+        public long   ProductId   { get; set; }
     }
 
-
+    public class PagedResult<T>
+    {
+        public IEnumerable<T> Items      { get; set; } = Enumerable.Empty<T>();
+        public int            TotalPages { get; set; }
+    }
 }
