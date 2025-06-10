@@ -68,7 +68,7 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
             <button className="buy-button">Do koszyka</button>
             {isAdmin && (
               <button
-                className="delete-button"
+                className={product.isDeleted ? 'add-button' : 'delete-button'}
                 onClick={() => onDelete(product.id, product.isDeleted)}
               >
                 {product.isDeleted ? 'Dodaj' : 'Usuń'}
@@ -89,7 +89,9 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
             {isAdmin && (
               <button
                 onClick={() => handleDelete(c.id, c.isDeleted)}
-                className="comment-delete-button"
+                className={
+                  c.isDeleted ? 'comment-add-button' : 'comment-delete-button'
+                }
               >
                 {c.isDeleted ? 'Dodaj' : 'Usuń'}
               </button>

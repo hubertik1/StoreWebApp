@@ -117,6 +117,22 @@
   color: #777;
 }
 
+.add-button {
+  background-color: #2ecc71;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #27ae60;
+}
+
 .buy-button {
   background-color: orange;
   border: none;
@@ -226,6 +242,22 @@
 
 .comment {
   display: flex;
+.comment-add-button {
+  background-color: #2ecc71;
+  border: none;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.comment-add-button:hover {
+  background-color: #27ae60;
+}
+
 .hidden-label {
   color: #888;
   font-size: 0.8rem;
