@@ -17,6 +17,10 @@ namespace StoreWebApp.Models
 
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
+        public long CreatorUserId { get; set; }
+
+        public User? CreatorUser { get; set; }
+
         /* ─────── FK → Product ─────── */
         public long ProductId { get; set; }
         public Product Product { get; set; } = null!;

@@ -11,6 +11,16 @@ namespace StoreWebApp.Data
     {
         public static void Initialize(StoreDbContext context)
         {
+            var adminUser = context.Users.FirstOrDefault(u => u.Username == "admin");
+            if (adminUser == null)
+            {
+                var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<User>();
+                adminUser = new User { Username = "admin", Role = "Admin" };
+                adminUser.PasswordHash = hasher.HashPassword(adminUser, "admin");
+                context.Users.Add(adminUser);
+                context.SaveChanges();
+            }
+
             if (context.Products.Any())
                 return;
 
@@ -31,6 +41,7 @@ namespace StoreWebApp.Data
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
                     ImageUrl = "images/spawarka.jpg",
+                    CreatorUserId = adminUser.Id,
                     Categories = new List<Category> { categoryTools }
                 },
                 new Product
@@ -40,6 +51,7 @@ namespace StoreWebApp.Data
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
                     ImageUrl = "images/piaskownica.webp",
+                    CreatorUserId = adminUser.Id,
                     Categories = new List<Category> { categoryToys }
                 },
                 new Product
@@ -49,14 +61,19 @@ namespace StoreWebApp.Data
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
                     ImageUrl = "images/pomidor.jpg",
+                    CreatorUserId = adminUser.Id,
                     Categories = new List<Category> { categoryFood }
                 },
                 new Product
                 {
-                    Title = "Pizza Gastro-Net",
-                    Description = "Pizza z Gastro-Netu to grube, niedopieczone ciasto z cienką warstwą sera i kawałkami szynki. Tekstura jest gumowata, składniki niskiej jakości, a wygląd mało zachęcający. Całość wydaje się mało staranna i niezbyt smaczna.",
+                    CreatorUserId = adminUser.Id,
+                            CreationDate = DateTime.Now,
+                            CreatorUserId = adminUser.Id
+                            CreationDate = DateTime.Now,
+                            CreatorUserId = adminUser.Id
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
+                    CreatorUserId = adminUser.Id,
                     ImageUrl = "images/pizza.jpeg",
                     Categories = new List<Category> { categoryFood },
                     Comments = new List<Comment>

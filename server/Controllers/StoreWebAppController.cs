@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Security.Claims;
 
 namespace StoreWebApp.Controllers
 {
@@ -75,6 +76,10 @@ namespace StoreWebApp.Controllers
         [Authorize]
         public ActionResult<Product> AddProduct([FromBody] Product product)
         {
+            if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
+            {
+                product.CreatorUserId = uid;
+            }
             _context.Products.Add(product);
             _context.SaveChanges();
             return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
@@ -112,6 +117,10 @@ namespace StoreWebApp.Controllers
                 IsDeleted = false,
                 CreationDate = DateTime.UtcNow
             };
+            if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
+            {
+                product.CreatorUserId = uid;
+            }
 
             Category? category = null;
             if (categoryId.HasValue)

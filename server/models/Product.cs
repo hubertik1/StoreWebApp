@@ -23,6 +23,10 @@ namespace StoreWebApp.Models
 
         public string? ImageUrl { get; set; }
 
+        public long CreatorUserId { get; set; }
+
+        public User? CreatorUser { get; set; }
+
         /* ─────── navigation ─────── */
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
         public ICollection<Category> Categories { get; set; } = new HashSet<Category>();
