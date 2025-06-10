@@ -29,7 +29,7 @@ namespace StoreWebApp.Data
             var categoryToys     = new Category { Name = "Toys", IsDeleted = false };
             var categoryFood     = new Category { Name = "Food", IsDeleted = false };
 
-            context.Set<Category>().AddRange(categoryVehicles, categoryTools, categoryToys, categoryFood);
+            context.Categories.AddRange(categoryVehicles, categoryTools, categoryToys, categoryFood);
             context.SaveChanges();
 
             var products = new Product[]
@@ -40,18 +40,18 @@ namespace StoreWebApp.Data
                     Description = "Profesjonalna spawarka inwertorowa o mocy 200 A, idealna do prac warsztatowych i domowych.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
-                    CreatorUserId = adminUser.Id,
                     ImageUrl = "images/spawarka.jpg",
+                    CreatorUserId = adminUser.Id,
                     Categories = new List<Category> { categoryTools }
                 },
                 new Product
                 {
                     Title = "Little Tikes Lt Piaskownica Żółw",
-                    Description = "Oto Twój niezwykły kącik zabaw - zamykana piaskownica Żółw od renomowanej marki Little Tikes, lidera wśród dostawców placów zabaw i zabawek ogrodowych.",
+                    Description = "Oto Twój niezwykły kącik zabaw – zamykana piaskownica Żółw od renomowanej marki Little Tikes, lidera wśród dostawców placów zabaw i zabawek ogrodowych.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
-                    CreatorUserId = adminUser.Id,
                     ImageUrl = "images/piaskownica.webp",
+                    CreatorUserId = adminUser.Id,
                     Categories = new List<Category> { categoryToys }
                 },
                 new Product
@@ -60,26 +60,27 @@ namespace StoreWebApp.Data
                     Description = "Pomidor charakteryzuje się słodkim smakiem, jędrną czerwoną skórką i soczystym miąższem.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
-                    CreatorUserId = adminUser.Id,
                     ImageUrl = "images/pomidor.jpg",
+                    CreatorUserId = adminUser.Id,
                     Categories = new List<Category> { categoryFood }
                 },
                 new Product
                 {
                     Title = "Pizza Gastro-Net",
-                    Description = "Pizza z Gastro-Netu to grube, niedopieczone ciasto z cienką warstwą sera i kawałkami szynki. Tekstura jest gumowata, składniki niskiej jakości, a wygląd mało zachęcający. Całość wydaje się mało staranna i niezbyt smaczna.",
+                    Description = "Pizza z Gastro-Netu – grube, niedopieczone ciasto, niskiej jakości składniki i mało apetyczny wygląd.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
-                    CreatorUserId = adminUser.Id,
                     ImageUrl = "images/pizza.jpeg",
+                    CreatorUserId = adminUser.Id,
                     Categories = new List<Category> { categoryFood },
                     Comments = new List<Comment>
                     {
                         new Comment
                         {
-                            Description = "Kupiłem tę pizzę z Gastro-Netu i muszę przyznać, że jestem mocno rozczarowany. Ciasto było za grube i lekko niedopieczone, ser praktycznie bez smaku, a dodatki bardzo skąpe. Raczej nie spróbuję jej ponownie i nie polecam innym studentom.",
+                            Description = "Kupiłem tę pizzę i jestem rozczarowany. Ciasto za grube i niedopieczone, ser niemal bez smaku.",
                             IsDeleted = false,
-                            CreationDate = DateTime.Now
+                            CreationDate = DateTime.Now,
+                            CreatorUserId = adminUser.Id
                         }
                     }
                 },
@@ -89,38 +90,50 @@ namespace StoreWebApp.Data
                     Description = "Dzień dobry, mamy do sprzedania seicento 1.1 2001. Stan techniczny dobry, syn jeździł cały rok.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
-                    CreatorUserId = adminUser.Id,
                     ImageUrl = "images/seicento.webp",
+                    CreatorUserId = adminUser.Id,
                     Categories = new List<Category> { categoryVehicles },
                     Comments = new List<Comment>
                     {
                         new Comment
                         {
-                            Description = "Siedzenia zostały wymienione na dobre ale w innym kolorze.",
-                            CreationDate = DateTime.Now,
+                            Description = "Siedzenia zostały wymienione, ale w innym kolorze.",
                             IsDeleted = false,
-                            CreatorUserId = adminUser.Id,
+                            CreationDate = DateTime.Now,
+                            CreatorUserId = adminUser.Id
                         },
                         new Comment
                         {
-                            Description = "Radio sprawne, gra, centralny zamek z kluczyka sprawny.",
-                            CreationDate = DateTime.Now,
+                            Description = "Radio sprawne, centralny zamek działa poprawnie.",
                             IsDeleted = false,
-                            CreatorUserId = adminUser.Id,
+                            CreationDate = DateTime.Now,
+                            CreatorUserId = adminUser.Id
                         }
                     }
                 },
                 new Product
                 {
                     Title = "Eko Mak Makaron Babuni Świderek",
-                    Description = "Eko Mak Makaron Babuni świderek 45 1kg. Makarony Babuni to najwyższej jakości wyroby, które swoim niepowtarzalnym smakiem trafiają do grona smakoszy.",
+                    Description = "Makarony Babuni – najwyższej jakości wyroby z unikalnym smakiem trafiające do grona smakoszy.",
                     IsDeleted = false,
                     CreationDate = DateTime.Now,
+                    ImageUrl = "images/swiderki.png",
                     CreatorUserId = adminUser.Id,
-                    ImageUrl = "images/swiderki.png",                
                     Categories = new List<Category> { categoryFood }
                 }
             };
+
+
+            foreach (var product in products)
+            {
+                if (product.Comments != null)
+                {
+                    foreach (var comment in product.Comments)
+                    {
+                        comment.Product = product;
+                    }
+                }
+            }
 
             context.Products.AddRange(products);
             context.SaveChanges();

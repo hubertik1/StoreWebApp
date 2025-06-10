@@ -48,7 +48,7 @@ namespace StoreWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("StoreWebApp.Models.Comment", b =>
@@ -79,7 +79,7 @@ namespace StoreWebApp.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("StoreWebApp.Models.Product", b =>

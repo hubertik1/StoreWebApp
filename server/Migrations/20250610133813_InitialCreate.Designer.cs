@@ -11,8 +11,8 @@ using StoreWebApp.Data;
 namespace StoreWebApp.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20250610130928_AddCreatorUserIds")]
-    partial class AddCreatorUserIds
+    [Migration("20250610133813_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,7 +51,7 @@ namespace StoreWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("StoreWebApp.Models.Comment", b =>
@@ -82,7 +82,7 @@ namespace StoreWebApp.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("StoreWebApp.Models.Product", b =>

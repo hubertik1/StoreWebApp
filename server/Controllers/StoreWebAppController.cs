@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using StoreWebApp.Data;
@@ -27,7 +27,7 @@ namespace StoreWebApp.Controllers
         [AllowAnonymous]
         public ActionResult<IEnumerable<Category>> GetCategories()
         {
-            var categories = _context.Category
+            var categories = _context.Categories
                 .Where(c => !c.IsDeleted)
                 .AsNoTracking()
                 .ToList();
@@ -125,7 +125,7 @@ namespace StoreWebApp.Controllers
             Category? category = null;
             if (categoryId.HasValue)
             {
-                category = _context.Category.FirstOrDefault(c => c.Id == categoryId.Value && !c.IsDeleted);
+                category = _context.Categories.FirstOrDefault(c => c.Id == categoryId.Value && !c.IsDeleted);
             }
 
             if (category != null)
