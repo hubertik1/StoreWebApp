@@ -21,6 +21,17 @@ namespace StoreWebApp.Controllers
         }
 
         [HttpGet]
+        [Route("GetCategories")]
+        public ActionResult<IEnumerable<Category>> GetCategories()
+        {
+            var categories = _context.Category
+                .Where(c => !c.IsDeleted)
+                .AsNoTracking()
+                .ToList();
+            return Ok(categories);
+        }
+
+        [HttpGet]
         [Route("GetProducts")]
         public ActionResult<PagedResult<Product>> GetProducts(
             [FromQuery] string? search,
@@ -70,6 +81,8 @@ namespace StoreWebApp.Controllers
         public async Task<ActionResult<Product>> UploadProduct(
             [FromForm] string title,
             [FromForm] string description,
+            [FromForm] long? categoryId,
+            [FromForm] string? newCategory,
             [FromForm] IFormFile? image)
         {
             string? imageUrl = null;
@@ -95,6 +108,22 @@ namespace StoreWebApp.Controllers
                 IsDeleted = false,
                 CreationDate = DateTime.UtcNow
             };
+
+            Category? category = null;
+            if (!string.IsNullOrWhiteSpace(newCategory))
+            {
+                category = new Category { Name = newCategory, IsDeleted = false };
+                _context.Category.Add(category);
+            }
+            else if (categoryId.HasValue)
+            {
+                category = _context.Category.FirstOrDefault(c => c.Id == categoryId.Value && !c.IsDeleted);
+            }
+
+            if (category != null)
+            {
+                product.Categories.Add(category);
+            }
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();

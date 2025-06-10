@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const API_URL = 'http://localhost:5042/';
 
@@ -7,13 +7,28 @@ const AddProductForm = ({ onAdd }) => {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
   const [drag, setDrag] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [categoryId, setCategoryId] = useState('');
+  const [newCategory, setNewCategory] = useState('');
   const fileInput = useRef(null);
+
+  useEffect(() => {
+    fetch(`${API_URL}api/storewebapp/GetCategories`)
+      .then(res => res.json())
+      .then(data => setCategories(data))
+      .catch(() => {});
+  }, []);
 
   const handleSubmit = e => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
+    if (newCategory.trim()) {
+      formData.append('newCategory', newCategory.trim());
+    } else if (categoryId) {
+      formData.append('categoryId', categoryId);
+    }
     if (image) formData.append('image', image);
 
     fetch(`${API_URL}api/storewebapp/UploadProduct`, {
@@ -26,6 +41,8 @@ const AddProductForm = ({ onAdd }) => {
         setTitle('');
         setDescription('');
         setImage(null);
+        setCategoryId('');
+        setNewCategory('');
       })
       .catch(() => {});
   };
@@ -61,6 +78,18 @@ const AddProductForm = ({ onAdd }) => {
         value={title}
         onChange={e => setTitle(e.target.value)}
         required
+      />
+      <select value={categoryId} onChange={e => setCategoryId(e.target.value)}>
+        <option value="">Wybierz kategorię</option>
+        {categories.map(cat => (
+          <option key={cat.id} value={cat.id}>{cat.name}</option>
+        ))}
+      </select>
+      <input
+        type="text"
+        placeholder="Nowa kategoria"
+        value={newCategory}
+        onChange={e => setNewCategory(e.target.value)}
       />
       <textarea
         placeholder="Opis produktu"
