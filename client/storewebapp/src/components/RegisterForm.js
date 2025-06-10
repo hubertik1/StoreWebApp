@@ -5,6 +5,8 @@ const API_URL = 'http://localhost:5042/';
 const RegisterForm = ({ onRegister }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -14,13 +16,25 @@ const RegisterForm = ({ onRegister }) => {
       body: JSON.stringify({ username, password })
     })
       .then(async res => {
-        if (!res.ok) throw new Error('register failed');
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text);
+        }
         return res.json();
       })
       .then(data => {
+        setIsError(false);
+        setMessage('You have successfully registered');
         onRegister(data.token, data.role, data.username);
       })
-      .catch(() => {});
+      .catch(err => {
+        setIsError(true);
+        if (err.message.includes('User exists')) {
+          setMessage('An account with this username already exists');
+        } else {
+          setMessage('Registration failed');
+        }
+      });
   };
 
   return (
@@ -40,6 +54,9 @@ const RegisterForm = ({ onRegister }) => {
         required
       />
       <button type="submit">Zarejestruj</button>
+      {message && (
+        <div className={`notification ${isError ? 'error' : ''}`}>{message}</div>
+      )}
     </form>
   );
 };

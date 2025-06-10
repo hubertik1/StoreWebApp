@@ -195,3 +195,12 @@
 .login-form input {
   padding: 4px;
 }
+
+.notification {
+  margin-top: 6px;
+  color: green;
+}
+
+.notification.error {
+  color: red;
+}

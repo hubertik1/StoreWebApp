@@ -47,11 +47,11 @@ namespace StoreWebApp.Controllers
         {
             var user = _context.Users.FirstOrDefault(u => u.Username == dto.Username);
             if (user == null)
-                return Unauthorized();
+                return BadRequest("User not found");
 
             var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
             if (result == PasswordVerificationResult.Failed)
-                return Unauthorized();
+                return BadRequest("Wrong password");
 
             return Ok(new { token = GenerateToken(user), role = user.Role, username = user.Username });
         }
