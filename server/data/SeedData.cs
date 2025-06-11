@@ -1,8 +1,4 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using StoreWebApp.Models;
-using StoreWebApp.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace StoreWebApp.Data
