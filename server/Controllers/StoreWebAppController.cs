@@ -88,30 +88,6 @@ namespace StoreWebApp.Controllers
             return Ok(result);
         }   
 
-        [HttpPost("AddProduct")]
-        [Authorize]
-        public ActionResult<Product> AddProduct([FromBody] Product product)
-        {
-            if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
-                product.CreatorUserId = uid;
-
-            if (product.Categories is { Count: > 0 })
-            {
-                var catIds = product.Categories.Select(c => c.Id).ToList();
-                product.Categories.Clear();
-                var categories = _context.Categories
-                    .Where(c => catIds.Contains(c.Id) && !c.IsDeleted)
-                    .ToList();
-                foreach (var cat in categories)
-                    product.Categories.Add(cat);
-            }
-
-            _context.Products.Add(product);
-            _context.SaveChanges();
-
-            return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
-        }
-
         // ──► FIXED ACTION ◄──  (single [FromForm] parameter for Swagger)
         [HttpPost("UploadProduct")]
         [Authorize]
@@ -162,31 +138,6 @@ namespace StoreWebApp.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
-        }
-
-        [HttpPut("UpdateProduct/{id}")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult UpdateProduct(long id, [FromBody] Product updatedProduct)
-        {
-            if (id != updatedProduct.Id)
-                return BadRequest();
-
-            var product = _context.Products
-                .Include(p => p.Categories)
-                .Include(p => p.Comments)
-                .FirstOrDefault(p => p.Id == id);
-
-            if (product is null)
-                return NotFound();
-
-            product.Title       = updatedProduct.Title;
-            product.Description = updatedProduct.Description;
-            product.ImageUrl    = updatedProduct.ImageUrl;
-            product.IsDeleted   = updatedProduct.IsDeleted;
-            // Update categories here if needed
-
-            _context.SaveChanges();
-            return NoContent();
         }
 
         [HttpDelete("DeleteProduct/{id}")]
