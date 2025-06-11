@@ -72,7 +72,7 @@ namespace StoreWebApp.Data
                     CreationDate = DateTime.Now,
                     ImageUrl = "images/pizza.jpeg",
                     CreatorUserId = adminUser.Id,
-                    Categories = new List<Category> { categoryFood },
+                    Categories = new List<Category> { categoryFood, categoryTools },
                     Comments = new List<Comment>
                     {
                         new Comment

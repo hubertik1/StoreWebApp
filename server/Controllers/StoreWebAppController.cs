@@ -90,6 +90,17 @@ namespace StoreWebApp.Controllers
             if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
                 product.CreatorUserId = uid;
 
+            if (product.Categories is { Count: > 0 })
+            {
+                var catIds = product.Categories.Select(c => c.Id).ToList();
+                product.Categories.Clear();
+                var categories = _context.Categories
+                    .Where(c => catIds.Contains(c.Id) && !c.IsDeleted)
+                    .ToList();
+                foreach (var cat in categories)
+                    product.Categories.Add(cat);
+            }
+
             _context.Products.Add(product);
             _context.SaveChanges();
 
@@ -131,13 +142,14 @@ namespace StoreWebApp.Controllers
             if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
                 product.CreatorUserId = uid;
 
-            // Optional category
-            if (dto.CategoryId is long catId)
+            // Optional categories
+            if (dto.CategoryIds != null && dto.CategoryIds.Count > 0)
             {
-                var category = _context.Categories
-                    .FirstOrDefault(c => c.Id == catId && !c.IsDeleted);
+                var categories = _context.Categories
+                    .Where(c => dto.CategoryIds.Contains(c.Id) && !c.IsDeleted)
+                    .ToList();
 
-                if (category is not null)
+                foreach (var category in categories)
                     product.Categories.Add(category);
             }
 
@@ -194,6 +206,49 @@ namespace StoreWebApp.Controllers
                 return NotFound();
 
             product.IsDeleted = false;
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpPost("AddProductCategory")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AddProductCategory(long productId, long categoryId)
+        {
+            var product = _context.Products
+                .Include(p => p.Categories)
+                .FirstOrDefault(p => p.Id == productId);
+            if (product is null)
+                return NotFound();
+
+            var category = _context.Categories
+                .FirstOrDefault(c => c.Id == categoryId && !c.IsDeleted);
+            if (category is null)
+                return NotFound();
+
+            if (!product.Categories.Any(c => c.Id == categoryId))
+            {
+                product.Categories.Add(category);
+                _context.SaveChanges();
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("RemoveProductCategory")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult RemoveProductCategory(long productId, long categoryId)
+        {
+            var product = _context.Products
+                .Include(p => p.Categories)
+                .FirstOrDefault(p => p.Id == productId);
+            if (product is null)
+                return NotFound();
+
+            var category = product.Categories.FirstOrDefault(c => c.Id == categoryId);
+            if (category is null)
+                return NotFound();
+
+            product.Categories.Remove(category);
             _context.SaveChanges();
             return NoContent();
         }

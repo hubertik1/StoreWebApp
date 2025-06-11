@@ -13,7 +13,7 @@ namespace StoreWebApp.Models   // use the same namespace you keep your other DTO
 
         public string? Description { get; set; }
 
-        public long? CategoryId { get; set; }
+        public List<long>? CategoryIds { get; set; }
 
         public IFormFile? Image { get; set; }
     }

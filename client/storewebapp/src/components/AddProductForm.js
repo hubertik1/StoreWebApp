@@ -8,7 +8,7 @@ const AddProductForm = ({ onAdd, token }) => {
   const [image, setImage] = useState(null);
   const [drag, setDrag] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [categoryId, setCategoryId] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const fileInput = useRef(null);
 
   useEffect(() => {
@@ -23,9 +23,9 @@ const AddProductForm = ({ onAdd, token }) => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    if (categoryId) {
-      formData.append('categoryId', categoryId);
-    }
+    selectedCategories.forEach(id => {
+      formData.append('categoryIds', id);
+    });
     if (image) formData.append('image', image);
 
     fetch(`${API_URL}api/storewebapp/UploadProduct`, {
@@ -41,7 +41,7 @@ const AddProductForm = ({ onAdd, token }) => {
         setTitle('');
         setDescription('');
         setImage(null);
-        setCategoryId('');
+        setSelectedCategories([]);
       })
       .catch(() => {});
   };
@@ -78,8 +78,15 @@ const AddProductForm = ({ onAdd, token }) => {
         onChange={e => setTitle(e.target.value)}
         required
       />
-      <select value={categoryId} onChange={e => setCategoryId(e.target.value)}>
-        <option value="">Wybierz kategorię</option>
+      <select
+        multiple
+        value={selectedCategories}
+        onChange={e =>
+          setSelectedCategories(
+            Array.from(e.target.selectedOptions, o => o.value)
+          )
+        }
+      >
         {categories.map(cat => (
           <option key={cat.id} value={cat.id}>{cat.name}</option>
         ))}
