@@ -150,6 +150,7 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
         )}
       </div>
       <div className="comments">
+        <h3>Komentarze:</h3>
         {comments.map(c => (
           <div key={c.id} className="comment">
             <span>
