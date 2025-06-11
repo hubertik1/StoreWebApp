@@ -15,22 +15,36 @@ const UserAdminPanel = ({ token, show }) => {
       .catch(() => {});
   }, [token]);
 
-  const changeRole = (id, role) => {
-    fetch(`${API_URL}api/auth/updateRole/${id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({ role })
-    })
-      .then(res => {
-        if (res.ok) {
-          setUsers(u => u.map(user => (user.id === id ? { ...user, role } : user)));
-        }
+    const changeRole = (id, newRole) => {
+      fetch(`${API_URL}api/auth/updateRole/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ role: newRole })
       })
-      .catch(() => {});
-  };
+        .then(res => {
+          if (res.status === 204) {
+            // Sukces – ponownie pobierz użytkowników
+            fetch(`${API_URL}api/auth/users`, {
+              headers: { Authorization: `Bearer ${token}` }
+            })
+              .then(r => r.json())
+              .then(data => setUsers(data))
+              .catch(() => {});
+            return {}; // Zwracamy pusty obiekt, aby nie parsować JSON
+          } else if (!res.ok) {
+            return res.text().then(text => {
+              alert(text);
+              throw new Error(text);
+            });
+          } else {
+            return res.json();
+          }
+        })
+        .catch(err => console.error(err));
+    };
 
   return (
     <div className={`user-panel ${show ? 'open' : ''}`}>

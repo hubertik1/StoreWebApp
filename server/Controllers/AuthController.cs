@@ -42,6 +42,8 @@ namespace StoreWebApp.Controllers
             var user = _context.Users.FirstOrDefault(u => u.Id == id);
             if (user == null)
                 return NotFound();
+            if (user.Username.Equals("admin", StringComparison.OrdinalIgnoreCase) && dto.Role == "User")
+                return BadRequest("Nie można zmienić roli konta admin.");
             if (dto.Role != "Admin" && dto.Role != "User")
                 return BadRequest();
 

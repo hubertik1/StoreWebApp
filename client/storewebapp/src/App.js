@@ -47,6 +47,7 @@ const App = () => {
     window.location.reload();
   };
 
+
   return (
     <div className="App">
       <header className="header">
@@ -82,7 +83,6 @@ const App = () => {
             </button>
           </div>
 
-          {/* Panel jest stale w DOM-ie – tylko wsuwa / wysuwa się z boku */}
           <UserAdminPanel token={token} show={showUsers} />
         </>
       )}
