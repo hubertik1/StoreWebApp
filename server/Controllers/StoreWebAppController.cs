@@ -53,14 +53,19 @@ namespace StoreWebApp.Controllers
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 4)
         {
-            var query = _context.Products
-                .Where(p => !p.IsDeleted);
+            // Domyślnie pobieramy wszystkie produkty
+            IQueryable<Product> query = _context.Products;
+
+            // Jeśli użytkownik nie jest adminem – filtrujemy tylko produkty, które nie są usunięte.
+            if (!User.IsInRole("Admin"))
+            {
+                query = query.Where(p => !p.IsDeleted);
+            }
 
             if (!string.IsNullOrWhiteSpace(search))
             {
                 search = search.ToLower();
-                query = query.Where(p =>
-                    EF.Functions.Like(p.Title.ToLower(), $"%{search}%"));
+                query = query.Where(p => EF.Functions.Like(p.Title.ToLower(), $"%{search}%"));
             }
 
             int totalItems = query.Count();
@@ -76,12 +81,12 @@ namespace StoreWebApp.Controllers
 
             var result = new PagedResult<Product>
             {
-                Items      = products,
+                Items = products,
                 TotalPages = totalPages
             };
 
             return Ok(result);
-        }
+        }   
 
         [HttpPost("AddProduct")]
         [Authorize]

@@ -34,6 +34,7 @@ const App = () => {
     localStorage.setItem('token', tok);
     localStorage.setItem('role', rl);
     localStorage.setItem('username', user);
+    window.location.reload();
   };
 
   const handleLogout = () => {
@@ -43,6 +44,7 @@ const App = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
+    window.location.reload();
   };
 
   return (

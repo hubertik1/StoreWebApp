@@ -37,13 +37,7 @@ const ProductList = ({ search, refresh, token, isAdmin }) => {
       method,
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(() =>
-        setProducts(prev =>
-          prev.map(p =>
-            p.id === id ? { ...p, isDeleted: !isDeleted } : p
-          )
-        )
-      )
+      .then(() => loadProducts(search, page)) 
       .catch(() => {});
   };
 
