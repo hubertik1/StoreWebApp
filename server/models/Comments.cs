@@ -21,7 +21,6 @@ namespace StoreWebApp.Models
 
         public User? CreatorUser { get; set; }
 
-        /* ─────── FK → Product ─────── */
         public long ProductId { get; set; }
         public Product Product { get; set; } = null!;
     }

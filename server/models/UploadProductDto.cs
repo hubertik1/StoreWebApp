@@ -1,11 +1,8 @@
-using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace StoreWebApp.Models   // use the same namespace you keep your other DTOs in
+namespace StoreWebApp.Models
 {
-    /// <summary>
-    /// Represents the multipart/form-data payload sent to /api/StoreWebApp/UploadProduct
-    /// </summary>
+
     public class UploadProductDto
     {
         [Required]

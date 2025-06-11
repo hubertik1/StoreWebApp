@@ -27,7 +27,6 @@ namespace StoreWebApp.Models
 
         public User? CreatorUser { get; set; }
 
-        /* ─────── navigation ─────── */
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
         public ICollection<Category> Categories { get; set; } = new HashSet<Category>();
     }

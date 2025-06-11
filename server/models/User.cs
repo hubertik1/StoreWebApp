@@ -16,6 +16,6 @@ namespace StoreWebApp.Models
         public string PasswordHash { get; set; } = string.Empty;
 
         [Required]
-        public string Role { get; set; } = "User"; // "Admin" or "User"
+        public string Role { get; set; } = "User";
     }
 }

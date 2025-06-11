@@ -17,14 +17,11 @@ namespace StoreWebApp.Controllers
             _context = context;
         }
 
-        // ──────────────────────────────────────────
-        // CATEGORIES
-        // ──────────────────────────────────────────
+        // Categories
         [HttpGet("GetCategories")]
         [AllowAnonymous]
         public ActionResult<IEnumerable<Category>> GetCategories()
         {
-            // Corrected to query Categories directly
             var query = _context.Categories.AsQueryable();
 
             if (!User.IsInRole("Admin"))
@@ -37,9 +34,7 @@ namespace StoreWebApp.Controllers
             return Ok(categories);
         }
 
-        // ──────────────────────────────────────────
         // PRODUCTS
-        // ──────────────────────────────────────────
         [HttpGet("GetProducts")]
         [AllowAnonymous]
         public ActionResult<PagedResult<Product>> GetProducts(
@@ -48,10 +43,8 @@ namespace StoreWebApp.Controllers
             [FromQuery] int pageSize = 4,
             [FromQuery] List<long>? categoryIds = null)
         {
-            // Domyślnie pobieramy wszystkie produkty
             IQueryable<Product> query = _context.Products;
 
-            // Jeśli użytkownik nie jest adminem – filtrujemy tylko produkty, które nie są usunięte.
             if (!User.IsInRole("Admin"))
             {
                 query = query.Where(p => !p.IsDeleted);
@@ -88,14 +81,12 @@ namespace StoreWebApp.Controllers
             return Ok(result);
         }   
 
-        // ──► FIXED ACTION ◄──  (single [FromForm] parameter for Swagger)
         [HttpPost("UploadProduct")]
         [Authorize]
         [Consumes("multipart/form-data")]
         public async Task<ActionResult<Product>> UploadProduct(
             [FromForm] UploadProductDto dto)
         {
-            // Handle file upload
             string? imageUrl = null;
             if (dto.Image is { Length: > 0 })
             {
@@ -110,7 +101,6 @@ namespace StoreWebApp.Controllers
                 imageUrl = Path.Combine("images", fileName).Replace("\\", "/");
             }
 
-            // Create the product
             var product = new Product
             {
                 Title        = dto.Title,
@@ -123,7 +113,6 @@ namespace StoreWebApp.Controllers
             if (long.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid))
                 product.CreatorUserId = uid;
 
-            // Optional categories
             if (dto.CategoryIds != null && dto.CategoryIds.Count > 0)
             {
                 var categories = _context.Categories
@@ -209,9 +198,7 @@ namespace StoreWebApp.Controllers
             return NoContent();
         }
 
-        // ──────────────────────────────────────────
         // COMMENTS
-        // ──────────────────────────────────────────
         [HttpGet("GetComments/{productId}")]
         [AllowAnonymous]
         public ActionResult<IEnumerable<Comment>> GetComments(long productId)
@@ -280,9 +267,6 @@ namespace StoreWebApp.Controllers
         }
     }
 
-    // ──────────────────────────────────────────────
-    // SIMPLE DTOS
-    // ──────────────────────────────────────────────
     public class CommentDto
     {
         public string Description { get; set; } = string.Empty;

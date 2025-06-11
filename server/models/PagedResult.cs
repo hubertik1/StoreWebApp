@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-
 namespace StoreWebApp.Models
 {
     public class PagedResult<T>
