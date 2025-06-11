@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import ProductCard from './ProductCard';
 
 const API_URL = 'http://localhost:5042/';
@@ -12,11 +12,7 @@ const ProductList = ({ search, refresh, token, isAdmin, categoryIds = [] }) => {
     setPage(1);
   }, [search, refresh]);
 
-  useEffect(() => {
-    loadProducts(search, page, categoryIds);
-  }, [search, page, refresh, categoryIds]);
-
-  const loadProducts = (term, pageNum, cats) => {
+  const loadProducts = useCallback((term, pageNum, cats) => {
     const params = new URLSearchParams();
     if (term) params.append('search', term);
     params.append('page', pageNum);
@@ -31,7 +27,11 @@ const ProductList = ({ search, refresh, token, isAdmin, categoryIds = [] }) => {
         setTotalPages(data.totalPages);
       })
       .catch(() => {});
-  };
+  }, [token]);
+
+  useEffect(() => {
+    loadProducts(search, page, categoryIds);
+  }, [search, page, refresh, categoryIds, loadProducts]);
 
   const handleDelete = (id, isDeleted) => {
     const url = `${API_URL}api/storewebapp/${isDeleted ? 'RestoreProduct' : 'DeleteProduct'}/${id}`;
