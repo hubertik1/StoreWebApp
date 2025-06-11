@@ -69,6 +69,12 @@ const AddProductForm = ({ onAdd, token }) => {
     fileInput.current?.click();
   };
 
+  const toggleCategory = id => {
+    setSelectedCategories(prev =>
+      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+    );
+  };
+
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <input
@@ -78,19 +84,19 @@ const AddProductForm = ({ onAdd, token }) => {
         onChange={e => setTitle(e.target.value)}
         required
       />
-      <select
-        multiple
-        value={selectedCategories}
-        onChange={e =>
-          setSelectedCategories(
-            Array.from(e.target.selectedOptions, o => o.value)
-          )
-        }
-      >
+      <div className="category-select">
         {categories.map(cat => (
-          <option key={cat.id} value={cat.id}>{cat.name}</option>
+          <div
+            key={cat.id}
+            className={`category-item ${
+              selectedCategories.includes(cat.id) ? 'selected' : ''
+            }`}
+            onClick={() => toggleCategory(cat.id)}
+          >
+            {cat.name}
+          </div>
         ))}
-      </select>
+      </div>
       <textarea
         placeholder="Opis produktu"
         value={description}

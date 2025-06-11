@@ -266,6 +266,18 @@
   resize: vertical;
 }
 
+.category-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.category-select .category-item {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
 .drop-zone {
   border: 2px dashed #ccc;
   padding: 20px;
