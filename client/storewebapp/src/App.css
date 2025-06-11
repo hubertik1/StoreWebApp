@@ -21,16 +21,19 @@
 
 .category-filter {
   position: relative;
-  margin: 0 20px;
+  margin: 0 50px;
 }
 
 .category-label {
   cursor: pointer;
   user-select: none;
-  padding: 6px 8px;
+  padding: 6px 20px;       
   background-color: #ffffff;
   border-radius: 4px;
   color: #333;
+  display: inline-block;   
+  min-width: 105px;      
+  text-align: center;    
 }
 
 .category-menu {
@@ -53,6 +56,9 @@
 .category-item {
   padding: 6px 12px;
   cursor: pointer;
+  color: #333;
+  min-width: 120px;      
+
 }
 
 .category-item:hover {

@@ -24,7 +24,7 @@ const CategoryFilter = ({ selected = [], onChange }) => {
   return (
     <div className="category-filter">
       <div className="category-label" onClick={() => setOpen(o => !o)}>
-        Categories
+        Filtruj
       </div>
       <div className={`category-menu ${open ? 'open' : ''}`}>
         {categories.map(cat => (
