@@ -251,7 +251,11 @@
 }
 
 .comment {
-  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  background-color: #fefefe;
 }
 .comment-add-button {
   background-color: #2ecc71;
@@ -297,7 +301,7 @@
 
 .user-panel {
   position: fixed;
-  top: 120px;               /* poniżej nagłówka + guzika */
+  top: 120px;               
   right: 0;
   width: 260px;
   max-height: calc(100% - 140px);
