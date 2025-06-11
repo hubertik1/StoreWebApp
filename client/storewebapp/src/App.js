@@ -5,6 +5,7 @@ import AddProductForm from './components/AddProductForm';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import UserAdminPanel from './components/UserAdminPanel';
+import CategoryFilter from './components/CategoryFilter';
 
 const App = () => {
   const [search, setSearch] = useState('');
@@ -24,6 +25,7 @@ const App = () => {
     storedUser && storedUser !== 'undefined' ? storedUser : ''
   );
   const [showUsers, setShowUsers] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const handleAdded = () => setRefresh(r => r + 1);
 
@@ -52,6 +54,11 @@ const App = () => {
     <div className="App">
       <header className="header">
         <h1>Sklep Wszystko i Nic</h1>
+
+        <CategoryFilter
+          selected={selectedCategories}
+          onChange={setSelectedCategories}
+        />
 
         <div className="search-container">
           <input
@@ -103,6 +110,7 @@ const App = () => {
         refresh={refresh}
         token={token}
         isAdmin={role === 'Admin'}
+        categoryIds={selectedCategories}
       />
 
       <footer className="footer">

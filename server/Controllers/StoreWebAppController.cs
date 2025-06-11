@@ -51,7 +51,8 @@ namespace StoreWebApp.Controllers
         public ActionResult<PagedResult<Product>> GetProducts(
             [FromQuery] string? search,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 4)
+            [FromQuery] int pageSize = 4,
+            [FromQuery] List<long>? categoryIds = null)
         {
             // Domyślnie pobieramy wszystkie produkty
             IQueryable<Product> query = _context.Products;
@@ -66,6 +67,11 @@ namespace StoreWebApp.Controllers
             {
                 search = search.ToLower();
                 query = query.Where(p => EF.Functions.Like(p.Title.ToLower(), $"%{search}%"));
+            }
+
+            if (categoryIds is { Count: > 0 })
+            {
+                query = query.Where(p => p.Categories.Any(c => categoryIds.Contains(c.Id)));
             }
 
             int totalItems = query.Count();

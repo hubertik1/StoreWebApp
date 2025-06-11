@@ -3,7 +3,7 @@ import ProductCard from './ProductCard';
 
 const API_URL = 'http://localhost:5042/';
 
-const ProductList = ({ search, refresh, token, isAdmin }) => {
+const ProductList = ({ search, refresh, token, isAdmin, categoryIds = [] }) => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -13,13 +13,16 @@ const ProductList = ({ search, refresh, token, isAdmin }) => {
   }, [search, refresh]);
 
   useEffect(() => {
-    loadProducts(search, page);
-  }, [search, page, refresh]);
+    loadProducts(search, page, categoryIds);
+  }, [search, page, refresh, categoryIds]);
 
-  const loadProducts = (term, pageNum) => {
+  const loadProducts = (term, pageNum, cats) => {
     const params = new URLSearchParams();
     if (term) params.append('search', term);
     params.append('page', pageNum);
+    if (cats && cats.length > 0) {
+      cats.forEach(id => params.append('categoryIds', id));
+    }
     fetch(`${API_URL}api/storewebapp/GetProducts?${params.toString()}`,
       token ? { headers: { Authorization: `Bearer ${token}` } } : undefined)
       .then(res => res.json())
@@ -37,7 +40,7 @@ const ProductList = ({ search, refresh, token, isAdmin }) => {
       method,
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(() => loadProducts(search, page)) 
+      .then(() => loadProducts(search, page, categoryIds))
       .catch(() => {});
   };
 
