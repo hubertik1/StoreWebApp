@@ -20,12 +20,47 @@
 }
 
 .category-filter {
+  position: relative;
   margin: 0 20px;
 }
 
-.category-filter select {
-  padding: 6px;
+.category-label {
+  cursor: pointer;
+  user-select: none;
+  padding: 6px 8px;
+  background-color: #ffffff;
   border-radius: 4px;
+  color: #333;
+}
+
+.category-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 4px);
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+  z-index: 10;
+}
+
+.category-menu.open {
+  max-height: 200px;
+}
+
+.category-item {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.category-item:hover {
+  background-color: #f0f0f0;
+}
+
+.category-item.selected {
+  background-color: #d0d0d0;
 }
 
 .search-container {
