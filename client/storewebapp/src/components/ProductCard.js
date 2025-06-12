@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import EditProductForm from './EditProductForm';
 
 const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
+  const [productData, setProductData] = useState(product);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
-  const [productCategories, setProductCategories] = useState(product.categories || []);
+  const [productCategories, setProductCategories] = useState(productData.categories || []);
   const [allCategories, setAllCategories] = useState([]);
   const [addCatId, setAddCatId] = useState('');
   const [removeCatId, setRemoveCatId] = useState('');
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    fetch(`${apiUrl}api/storewebapp/GetComments/${product.id}`,
+    fetch(`${apiUrl}api/storewebapp/GetComments/${productData.id}`,
       token ? { headers: { Authorization: `Bearer ${token}` } } : undefined)
       .then(res => res.json())
       .then(data => setComments(data))
@@ -19,7 +22,7 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
       .then(res => res.json())
       .then(data => setAllCategories(data))
       .catch(() => {});
-  }, [product.id, token, apiUrl]);
+  }, [productData.id, token, apiUrl]);
 
   const handleAdd = e => {
     e.preventDefault();
@@ -29,7 +32,7 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ description: newComment, productId: product.id })
+      body: JSON.stringify({ description: newComment, productId: productData.id })
     })
       .then(res => res.json())
       .then(data => {
@@ -58,7 +61,7 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
 
   const handleAddCategory = () => {
     if (!addCatId) return;
-    fetch(`${apiUrl}api/storewebapp/AddProductCategory?productId=${product.id}&categoryId=${addCatId}`, {
+    fetch(`${apiUrl}api/storewebapp/AddProductCategory?productId=${productData.id}&categoryId=${addCatId}`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -74,7 +77,7 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
 
   const handleRemoveCategory = () => {
     if (!removeCatId) return;
-    fetch(`${apiUrl}api/storewebapp/RemoveProductCategory?productId=${product.id}&categoryId=${removeCatId}`, {
+    fetch(`${apiUrl}api/storewebapp/RemoveProductCategory?productId=${productData.id}&categoryId=${removeCatId}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -89,30 +92,35 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
   return (
     <div className="product-card" data-testid="product-card">
       <div className="product-main">
-        {product.imageUrl && (
+        {productData.imageUrl && (
           <div className="product-image">
-            <img src={`${apiUrl}${product.imageUrl}`} alt={product.title} />
+            <img src={`${apiUrl}${productData.imageUrl}`} alt={productData.title} />
           </div>
         )}
         <div className="product-details">
           <div className="details-text">
             <h3>
-              {product.title}
-              {isAdmin && product.isDeleted && (
+              {productData.title}
+              {isAdmin && productData.isDeleted && (
                 <span className="hidden-label"> (niewidoczne)</span>
               )}
             </h3>
-            <p>{product.description}</p>
+            <p>{productData.description}</p>
           </div>
           <div>
             <button className="buy-button">Do koszyka</button>
             {isAdmin && (
-              <button
-                className={product.isDeleted ? 'add-button' : 'delete-button'}
-                onClick={() => onDelete(product.id, product.isDeleted)}
-              >
-                {product.isDeleted ? 'Dodaj' : 'Usuń'}
-              </button>
+              <>
+                <button
+                  className={productData.isDeleted ? 'add-button' : 'delete-button'}
+                  onClick={() => onDelete(productData.id, productData.isDeleted)}
+                >
+                  {productData.isDeleted ? 'Dodaj' : 'Usuń'}
+                </button>
+                <button className="edit-button" onClick={() => setEditMode(true)}>
+                  Edytuj
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -184,6 +192,17 @@ const ProductCard = ({ product, apiUrl, onDelete, isAdmin, token }) => {
           </form>
         )}
       </div>
+      {editMode && (
+        <EditProductForm
+          product={productData}
+          token={token}
+          onEdited={p => {
+            setProductData(p);
+            setProductCategories(p.categories || []);
+          }}
+          onCancel={() => setEditMode(false)}
+        />
+      )}
     </div>
   );
 };

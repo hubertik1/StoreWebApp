@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using StoreWebApp.Data;
 using StoreWebApp.Models;
 using System.Security.Claims;
+using System.IO;
+using System;
 
 namespace StoreWebApp.Controllers
 {
@@ -153,6 +155,46 @@ namespace StoreWebApp.Controllers
             product.IsDeleted = false;
             _context.SaveChanges();
             return NoContent();
+        }
+
+        [HttpPut("EditProduct/{id}")]
+        [Authorize(Roles = "Admin")]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<Product>> EditProduct(long id, [FromForm] EditProductDto dto)
+        {
+            var product = _context.Products
+                .Include(p => p.Categories)
+                .FirstOrDefault(p => p.Id == id);
+            if (product is null)
+                return NotFound();
+
+            product.Title = dto.Title;
+            product.Description = dto.Description ?? string.Empty;
+
+            if (dto.Image is { Length: > 0 })
+            {
+                var ext = Path.GetExtension(dto.Image.FileName);
+                var fileName = $"{Guid.NewGuid()}{ext}";
+                var imagePath = Path.Combine("wwwroot", "images", fileName);
+                Directory.CreateDirectory(Path.GetDirectoryName(imagePath)!);
+                await using var stream = new FileStream(imagePath, FileMode.Create);
+                await dto.Image.CopyToAsync(stream);
+
+                product.ImageUrl = Path.Combine("images", fileName).Replace("\\", "/");
+            }
+
+            if (dto.CategoryIds != null)
+            {
+                var categories = _context.Categories
+                    .Where(c => dto.CategoryIds.Contains(c.Id) && !c.IsDeleted)
+                    .ToList();
+                product.Categories.Clear();
+                foreach (var cat in categories)
+                    product.Categories.Add(cat);
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok(product);
         }
 
         [HttpPost("AddProductCategory")]
