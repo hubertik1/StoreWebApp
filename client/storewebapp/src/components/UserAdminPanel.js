@@ -26,14 +26,13 @@ const UserAdminPanel = ({ token, show }) => {
       })
         .then(res => {
           if (res.status === 204) {
-            // Sukces – ponownie pobierz użytkowników
             fetch(`${API_URL}api/auth/users`, {
               headers: { Authorization: `Bearer ${token}` }
             })
               .then(r => r.json())
               .then(data => setUsers(data))
               .catch(() => {});
-            return {}; // Zwracamy pusty obiekt, aby nie parsować JSON
+            return {};
           } else if (!res.ok) {
             return res.text().then(text => {
               alert(text);
