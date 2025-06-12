@@ -233,7 +233,8 @@
   color: #fff;
   cursor: pointer;
   border-radius: 4px;
-  margin-left: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
   transition: background-color 0.3s ease;
 }
 
